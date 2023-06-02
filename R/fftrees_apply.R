@@ -212,8 +212,6 @@ fftrees_apply <- function(x,
 
     # print(paste0("tree ", tree_i, ":"))  # 4debugging
 
-    # NEW code start: ----
-
     # Get ID of tree_defs$tree for tree_i value (to consider all trees in turn):
     tree_i_id <- tree_defs$tree[tree_i]
     # print(paste0("\u2014 Current tree_i = ", tree_i, " corresponds to tree_i_id = ", tree_i_id)) # 4debugging
@@ -230,29 +228,6 @@ fftrees_apply <- function(x,
     direction_v <- cur_fft_df$direction
     threshold_v <- cur_fft_df$threshold
     exit_v      <- cur_fft_df$exit
-
-    # NEW code end. ----
-
-    # +++ here now +++
-
-    # # OLD code start: ----
-    #
-    # # Extract definition of current tree:
-    # class_o     <- trimws(unlist(strsplit(tree_defs$classes[tree_i], ";")))
-    # cue_o       <- trimws(unlist(strsplit(tree_defs$cues[tree_i], ";")))
-    # direction_o <- trimws(unlist(strsplit(tree_defs$directions[tree_i], ";")))
-    # threshold_o <- trimws(unlist(strsplit(tree_defs$thresholds[tree_i], ";")))
-    # exit_o      <- trimws(unlist(strsplit(tree_defs$exits[tree_i], ";")))
-    #
-    # # Check: Verify equality of OLD and NEW code results:
-    # if (!all.equal(class_o, class_v)) { stop("OLD vs. NEW: class diff") }
-    # if (!all.equal(cue_o, cue_v)) { stop("OLD vs. NEW: cue diff") }
-    # if (!all.equal(direction_o, direction_v)) { stop("OLD vs. NEW: direction diff") }
-    # if (!all.equal(threshold_o, threshold_v)) { stop("OLD vs. NEW: threshold diff") }
-    # if (!all.equal(exit_o, exit_v)) { stop("OLD vs. NEW: exit diff") }
-    #
-    # # OLD code end. ----
-
 
     # Verify current tree definition:
     verify_all_cues_in_data(cue_v, data)  # Do all cues occur (as names) in current data?
