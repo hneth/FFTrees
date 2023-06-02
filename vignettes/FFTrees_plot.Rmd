@@ -66,7 +66,7 @@ In the following, we illustrate both ways by creating FFTs based on the `titanic
 
 ### The Titanic data 
 
-```{r titanic-image, fig.align = "center", out.width="50%", echo = FALSE}
+```{r titanic-image, echo = FALSE, fig.align = "center", out.width = "50%"}
 knitr::include_graphics("../inst/titanic.jpg")
 ```
 
