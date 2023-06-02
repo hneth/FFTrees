@@ -42,7 +42,7 @@ This vignette illustrates how to construct fast-and-frugal trees (FFTs) for addi
 
 ### Mushrooms data
 
-```{r image-mushrooms, fig.align = "center", out.width = "225px", echo = FALSE}
+```{r image-mushrooms, echo = FALSE, out.width = "225px"}
 knitr::include_graphics("../inst/mushrooms.jpg")
 ```
 
@@ -165,7 +165,7 @@ This suggests that we should discard the expert's advice and primarily rely on t
 
 ### Iris.v data 
 
-```{r iris-image, fig.align = "center", out.width = "225px", echo = FALSE}
+```{r iris-image, echo = FALSE, out.width = "225px"}
 knitr::include_graphics("../inst/virginica.jpg")
 ```
 

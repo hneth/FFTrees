@@ -53,7 +53,7 @@ A corresponding problem from the domain of clinical diagnostics is:
 
 - Which patient has heart disease, given some data on patients' general health and diagnostic symptoms?
 
-```{r image, fig.align = "center", out.width="250px", echo = FALSE}
+```{r image, echo = FALSE, out.width = "250px"}
 knitr::include_graphics("../inst/CoronaryArtery.jpg")
 ```
 

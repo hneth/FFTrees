@@ -54,12 +54,12 @@ plot(heart.fft, tree = "best.train")
 ```
 
 
-We notice a 2x2\ table in the bottom-left corner of the plot: 
+Note the 2x2\ table in the bottom-left corner of the plot: 
 This is a _2\ x\ 2 matrix_ or _confusion table_ (see [Wikipedia](https://en.wikipedia.org/wiki/Confusion_matrix) or [Neth et al., 2021](https://doi.org/10.3389/fpsyg.2020.567817) for details). 
 A wide range of accuracy measures can be derived from this seemingly simple matrix. 
 Here is a generic version of a confusion table: 
 
-```{r confusion-table, fig.align = "center", out.width="50%", echo = FALSE, fig.cap = "**Figure 2**: A 2x2 matrix illustrating the frequency counts of 4 possible outcomes."}
+```{r confusion-table, echo = FALSE, out.width="50%", fig.cap = "**Figure 2**: A 2x2 matrix illustrating the frequency counts of 4 possible outcomes."}
 knitr::include_graphics("../inst/confusiontable.jpg")
 ```
 
