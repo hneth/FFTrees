@@ -18,6 +18,7 @@
 #'
 #' @importFrom stats as.formula glm predict var
 #' @importFrom dplyr near
+#'
 
 fftrees_grow_fan <- function(x,
                              repeat.cues = TRUE) {
@@ -61,7 +62,7 @@ fftrees_grow_fan <- function(x,
   )
 
 
-  # GROW TREES: ------
+  # Main: GROW TREES: ------
 
   # Setup trees: ----
 
@@ -164,7 +165,7 @@ fftrees_grow_fan <- function(x,
   # Note: Horizontal/by-row measures (ppv, npv) are currently NOT recorded in level_stats_i.
 
 
-  # LOOP (over trees): ----
+  # LOOP 1 (over trees): ------
 
   for (tree_i in 1:tree_n) {
 
@@ -247,7 +248,7 @@ fftrees_grow_fan <- function(x,
     level_current <- 0
 
 
-    # GROW THE TREE: ------
+    # while loop 2: GROW THE TREE: ------
 
     while (grow_tree == TRUE) {
 
@@ -381,48 +382,6 @@ fftrees_grow_fan <- function(x,
 
         # Define and add the set of key ASIF stats (to asif_stats): ----
 
-        { # HACKY code start: ------
-
-          # if (!is.null(my_goal)){ # include my.goal (name and value):
-          #
-          #   asif_stats[level_current,
-          #              c("sens", "spec",
-          #                "acc", "bacc", "wacc",
-          #                "dprime",
-          #                my_goal,        # my.goal (name)
-          #                "cost")] <- c(#
-          #                  asif_results$sens, asif_results$spec,
-          #                  asif_results$acc, asif_results$bacc, asif_results$wacc,
-          #                  asif_results$dprime,
-          #                  asif_results[[my_goal]],  # my.goal (value)
-          #                  asif_results$cost
-          #                )
-          #
-          # } else { # default set of ASIF stats:
-          #
-          #   asif_stats[level_current,
-          #              c("sens", "spec",
-          #                "acc", "bacc", "wacc",
-          #                "dprime",
-          #                # my_goal,        # my.goal (name)
-          #                "cost")] <- c(#
-          #                  asif_results$sens, asif_results$spec,
-          #                  asif_results$acc, asif_results$bacc, asif_results$wacc,
-          #                  asif_results$dprime,
-          #                  # asif_results[[my.goal]],  # my.goal (value)
-          #                  asif_results$cost
-          #                )
-          #
-          # } # if (my.goal).
-          # # Note: Horizontal/by-row measures (ppv, npv) are currently NOT recorded in asif_stats.
-          #
-          # # print(asif_stats)          # 4debugging
-          # asif_stats_m1 <- asif_stats  # 4checking
-
-        } # HACKY code end.
-
-
-        # CLEANER code start: ------
 
         # # Define the set of ASIF stats [asif_stats_name_v]: ----
         # if (!is.null(my_goal)){ # include my.goal (name and value):
@@ -451,18 +410,6 @@ fftrees_grow_fan <- function(x,
         asif_stats[level_current, asif_stats_name_v] <- asif_results[asif_stats_name_v]
 
         # print(asif_stats)  # 4debugging
-
-        # CLEANER code end. ------
-
-
-        # # Verify that HACKY and CLEANER codes yield same result:
-        # asif_stats_m2 <- asif_stats  # 4checking
-        #
-        # if (all.equal(asif_stats_m1, asif_stats_m2)){
-        #   # print("Ok: Both asif_stats methods yield the same result, qed.")
-        # } else {
-        #   print("Caveat: Both asif_stats methods yield DIFFERENT results.")
-        # }
 
 
         # If ASIF classification is perfect/ideal, set grow_tree to FALSE: ----
@@ -883,12 +830,12 @@ fftrees_grow_fan <- function(x,
 
   }
 
-  # Add tree_definitions to x:
+  # Add tree_definitions to x: ----
   x$trees$definitions <- tree_definitions
   x$trees$n <- nrow(tree_definitions)
 
 
-  # Provide user feedback:
+  # Provide user feedback: ----
   if (!x$params$quiet$fin) {
 
     n_trees <- x$trees$n
@@ -904,11 +851,12 @@ fftrees_grow_fan <- function(x,
 
 
 
-  # Output: ----
+  # Output: ------
 
   return(x)
 
 } # fftrees_grow_fan().
+
 
 
 # ToDo: ------
