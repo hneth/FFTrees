@@ -325,31 +325,6 @@ fftrees_create <- function(formula = NULL,
   }
 
 
-  # # OLD code start: ----
-  #
-  # # Note: Default was set to goal.threshold = "bacc" (in FFTrees.R).
-  #
-  # # Use argument value from FFTrees(), but provide feedback:
-  # if (!quiet$set) {
-  #
-  #   if (goal.threshold == "bacc"){ # report using bacc (i.e., the default):
-  #
-  #     msg <- paste0("\u2014 Setting 'goal.threshold = ", goal.threshold, "'\n")
-  #     cat(u_f_msg(msg))
-  #
-  #   } else { # report user setting:
-  #
-  #     msg <- paste0("\u2014 User set 'goal.threshold = ", goal.threshold, "'\n")
-  #     cat(u_f_msg(msg))
-  #
-  #   }
-  #
-  # } # if (any(sapply(quiet, isFALSE))).
-  #
-  #
-  # # OLD code end. ----
-
-
   # Verify goal.threshold:
 
   testthat::expect_true(!is.null(goal.threshold), info = "goal.threshold is NULL")
@@ -671,63 +646,7 @@ fftrees_create <- function(formula = NULL,
   }
 
 
-  # # OLD code start: ----
-  #
-  # # Convert (a character or factor) criterion to logical: ----
-  #
-  # if (inherits(data[[criterion_name]], "character") |
-  #     inherits(data[[criterion_name]], "factor")) {
-  #
-  #   # Save original values as decision.labels:
-  #   decision.labels <- unique(data[[criterion_name]])
-  #
-  #   # Remove any NA values from decision.labels (if present):
-  #   decision.labels <- decision.labels[!is.na(decision.labels)]
-  #
-  #   # Main: Convert criterion to logical:
-  #   data[[criterion_name]] <- data[[criterion_name]] == decision.labels[2]  # Note: NA values remain NA
-  #
-  #   if (any(sapply(quiet, isFALSE))) {
-  #
-  #     msg_lgc <- paste0("Converted the criterion to logical by '", criterion_name, " == ", decision.labels[2], "'.")
-  #
-  #     # cat(u_f_hig("\u2014 ", msg_lgc), "\n")
-  #
-  #     cli::cli_alert_warning(msg_lgc)
-  #
-  #   }
-  #
-  # } # Note: Moved into clean_data() TO ALSO repeat for data.test.
-  #
-  # # OLD code end. ----
-
-
   # Clean/pre-process training data: ----
-
-  # # OLD code start: ----
-  #
-  # # A. Remove any cues not in formula:
-  # data <- model.frame(
-  #   formula = formula,
-  #   data = data,
-  #   na.action = NULL
-  # )
-  #
-  # # B. Handle NA cases:
-  # if ( (allow_NA_pred | allow_NA_crit) & any(is.na(data)) ){
-  #   data <- handle_NA_data(data = data, criterion_name = criterion_name,
-  #                          mydata = "train", quiet = quiet)
-  # }
-  #
-  # # C. Convert any factor variables to character variables:
-  # data <- data %>%
-  #   dplyr::mutate_if(is.factor, paste)
-  #
-  # # D. Convert to tibble:
-  # data <- data %>%
-  #   tibble::as_tibble()
-  #
-  # # OLD code end. ----
 
   data <- clean_data(data = data, criterion_name = criterion_name, formula = formula,
                      mydata = "train", quiet = quiet)
@@ -736,31 +655,6 @@ fftrees_create <- function(formula = NULL,
   # Clean/pre-process data.test (same steps): ----
 
   if (!is.null(data.test)) { # same for test data:
-
-    # # OLD code start: ----
-    #
-    # # A. Remove any cues not in formula:
-    # data.test <- model.frame(
-    #   formula = formula,
-    #   data = data.test,
-    #   na.action = NULL
-    # )
-    #
-    # # B. Handle NA cases:
-    # if ( (allow_NA_pred | allow_NA_crit) & any(is.na(data.test)) ){
-    #   data.test <- handle_NA_data(data = data.test, criterion_name = criterion_name,
-    #                               mydata = "test", quiet = quiet)
-    # }
-    #
-    # # C. Convert any factor variables to character variables:
-    # data.test <- data.test %>%
-    #   dplyr::mutate_if(is.factor, paste)
-    #
-    # # D. Convert to tibble:
-    # data.test <- data.test %>%
-    #   tibble::as_tibble()
-    #
-    # # OLD code end. ----
 
     data.test <- clean_data(data = data.test, criterion_name = criterion_name, formula = formula,
                             mydata = "test", quiet = quiet)
@@ -888,5 +782,10 @@ fftrees_create <- function(formula = NULL,
   return(x)
 
 } # fftrees_create().
+
+
+# ToDo: ------
+
+# - etc.
 
 # eof.
