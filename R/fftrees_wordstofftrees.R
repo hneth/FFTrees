@@ -47,20 +47,10 @@ fftrees_wordstofftrees <- function(x,
 
   # Parameters / options: ------
 
-  # # Direction markers (symbols/words):
-  # directions_df <- data.frame(
-  #   direction   = c( "=",  ">", ">=", "<",  "<=", "!=", "equal", "equals", "equal to", "greater", "less"),
-  #   negation    = c("!=", "<=", "<",  ">=", ">",   "=",  "!=",    "!=",     "!=",       "<=",      ">=" ),
-  #   direction_f = c( "=",  ">", ">=", "<",  "<=", "!=",   "=",     "=",      "=",       ">",       "<"  ),
-  #   #
-  #   stringsAsFactors = FALSE
-  # ) # (local constant)
-
-  # exits_df <- data.frame(     # is NOT used anywhere?
-  #   exit.char = x$params$decision.labels,
-  #   exit = c("0", "1"),       # 0:FALSE/noise/left vs. 1:TRUE/signal/right
-  #   stringsAsFactors = FALSE
-  # )
+  # See global constants:
+  # - directions_df
+  # - exit_types
+  # in util_const.R
 
 
   # Clean up and check my.tree: ------
@@ -296,8 +286,6 @@ fftrees_wordstofftrees <- function(x,
 
   # Save result in x$trees$definitions (1 line, as df): ----
 
-  # NEW code start: ----
-
   cur_fft <- data.frame(class = classes_v,
                         cue = cues_v,
                         direction = directions_v,
@@ -309,31 +297,6 @@ fftrees_wordstofftrees <- function(x,
 
   my_tree_def <- write_fft_df(fft = cur_fft, tree = 1L)
   # print(my_tree_def)  # 4debugging
-
-  # NEW code end. ----
-
-  # +++ here now +++
-
-  # OLD code start: ----
-
-  # # fft_node_sep <- ";"  # (local constant)
-  #
-  # my_tree_def_o <- data.frame(
-  #   # Add. variables:
-  #   tree       = 1L,
-  #   nodes      = nodes_n,
-  #   # Key variables of fft (all plural):
-  #   classes    = paste(classes_v,    collapse = fft_node_sep),
-  #   cues       = paste(cues_v,       collapse = fft_node_sep),
-  #   directions = paste(directions_v, collapse = fft_node_sep),
-  #   thresholds = paste(thresholds_v, collapse = fft_node_sep),
-  #   exits      = paste(exits_v,      collapse = fft_node_sep),
-  #   #
-  #   stringsAsFactors = FALSE
-  # )
-  # # print(my_tree_def_o)  # 4debugging
-
-  # OLD code end. ----
 
 
   # # Check: Verify equality of OLD and NEW code results:

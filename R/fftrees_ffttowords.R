@@ -92,8 +92,6 @@ fftrees_ffttowords <- function(x = NULL,
 
     # print(paste0("tree ", tree_i, ":"))  # 4debugging
 
-    # NEW code start: ----
-
     # Get ID of tree_df$tree for tree_i value (to consider all trees in turn):
     tree_i_id <- tree_df$tree[tree_i]
     # print(paste0("\u2014 Current tree_i = ", tree_i, " corresponds to tree_i_id = ", tree_i_id)) # 4debugging
@@ -108,29 +106,6 @@ fftrees_ffttowords <- function(x = NULL,
     direction_v <- cur_fft_df$direction
     threshold_v <- cur_fft_df$threshold
     exit_v      <- cur_fft_df$exit
-
-    # NEW code end. ----
-
-    # +++ here now +++
-
-    # # OLD code start: ----
-    #
-    # # Extract definition of current tree:
-    # class_o     <- trimws(unlist(strsplit(tree_df$classes[tree_i], ";")))
-    # cue_o       <- trimws(unlist(strsplit(tree_df$cues[tree_i], ";")))
-    # direction_o <- trimws(unlist(strsplit(tree_df$directions[tree_i], ";")))
-    # threshold_o <- trimws(unlist(strsplit(tree_df$thresholds[tree_i], ";")))
-    # exit_o      <- trimws(unlist(strsplit(tree_df$exits[tree_i], ";")))
-    #
-    # # Check: Verify equality of OLD and NEW code results:
-    # if (!all.equal(class_o, class_v)) { stop("OLD vs. NEW: class diff") }
-    # if (!all.equal(cue_o, cue_v)) { stop("OLD vs. NEW: cue diff") }
-    # if (!all.equal(direction_o, direction_v)) { stop("OLD vs. NEW: direction diff") }
-    # if (!all.equal(threshold_o, threshold_v)) { stop("OLD vs. NEW: threshold diff") }
-    # if (!all.equal(exit_o, exit_v)) { stop("OLD vs. NEW: exit diff") }
-    #
-    # # OLD code end. ----
-
 
     decision.labels <- x$params$decision.labels  # (Note: keep "." naming, as in list x)
 
@@ -315,5 +290,10 @@ fftrees_ffttowords <- function(x = NULL,
   return(x)
 
 } # fftrees_ffttowords().
+
+
+# ToDo: ------
+
+# - etc.
 
 # eof.
