@@ -38,9 +38,9 @@ fft_df <- x_fft_df[1, ]  # best training tree
 ```
 
 
-```{r build-loop-function}
+```{r build-loop-NA-function}
 
-loop_NA <- function(data, criterion, pc){
+loop_NA <- function(data, criterion, pc, x, fft_df, x_stats_1){
 
   
 # Prepare for loop:
@@ -68,6 +68,8 @@ results[1, 1:n_col] <- x_stats_1
    # create vector with that pc for number of rows:
    pc_vec <- rep(pc_per_row, times = num_cols)
 
+   # set seed for reproducability
+   set.seed(13)
   
 # Loop 1: ---- 
 for (i in 1:n_sims){
@@ -121,37 +123,156 @@ return(results) # as data frame.
 ```
 
 
+
+
 ```{r apply-loop-function-25-na}
-# use loop-function, input = 25% nas:
+# use loop-NA-function, input = 25% NAs:
 heart_NA_25 <- loop_NA(heartdisease, "diagnosis", 0.25)
 ```
 
-
-
-
-
 ```{r apply-loop-function-50-na}
-# use loop-function, input = 50% nas:
+# use loop-NA-function, input = 50% NAs:
 heart_NA_50 <- loop_NA(heartdisease, "diagnosis", 0.50)
 ```
 
-
-
-
 ```{r apply-loop-function-75-na}
-# use loop-function, input = 75% nas:
+# use loop-NA-function, input = 75% NAs:
 heart_NA_75 <- loop_NA(heartdisease, "diagnosis", 0.75)
 ```
-
-
 
 ```{r apply-loop-function-100-na}
 # how many rows are in the data set:
 n <- nrow(heartdisease)
 
-# use loop-function, input = 100% nas:
+# use loop-NA-function, input = 100% NAs:
 heart_NA_100 <- loop_NA(heartdisease, "diagnosis", n)
 ```
 
+
+
+```{r build-loop-pc-function}
+
+# as input a vector with different pcs for which you want data:
+
+loop_pc <- function(data, criterion, several_pcs, x, fft_df, x_stats_1){
+  
+  # Initialize list to store results
+  results_dataframes <- vector("list", length(several_pcs))
+  
+  # length of vector, to know when to stop
+  n <- length(several_pcs)
+  
+  # Loop 2:
+  for (j in 1:n) {
+    
+    # use function loop_NA
+    results_dataframes[[j]] <-loop_NA(data, criterion, several_pcs[j], x, fft_df, x_stats_1)
+
+  } # for loop.
+  
+ # Output: ----
+return(results_dataframes)# as list.
+
+} # loop_pc.
+
+    ```
+
+
+```{r CHECK-functionality-function}
+# use loop-NA-function, input = 25% NAs:
+heart_NA_25 <- loop_NA(heartdisease, "diagnosis", 0.25)
+
+
+# use loop-NA-function, input = 50% NAs:
+heart_NA_50 <- loop_NA(heartdisease, "diagnosis", 0.50)
+
+# use loop-NA-function, input = 75% NAs:
+heart_NA_75 <- loop_NA(heartdisease, "diagnosis", 0.75)
+
+# use loop-pc-function, input = 25, 50, 75 % NAs:
+df_heart_NA <- loop_pc(heartdisease, "diagnosis", c(0.25, 0.5, 0.75))
+
+
+
+# check:
+df1 <- df_heart_NA[[1]]
+
+all.equal(df1, heart_NA_25)
+
+# check:
+df2 <- df_heart_NA[[2]]
+
+all.equal(df2, heart_NA_50)
+
+
+
+# check:
+df3 <- df_heart_NA[[3]]
+
+all.equal(df3, heart_NA_75)
+```
+
+
+```{r build-loop-datasets-function}
+
+# as input a vector with different data sets for which you want data:
+
+loop_datasets <- function(several_data, data_names, several_criterion, several_pcs){
+  
+  # Preparations:
+  # length of vector, to know when to stop
+  n <- length(several_data)
+  
+  
+  # Initialize list to store results
+  results_list_dataframes <- vector("list", n)
+  
+  
+  # Loop 3:
+  for (k in 1:n) {
+    
+  # build tree with original data for each dataset:
+        # get name of data set:
+        name <- data_names[k]
+
+        #Build tree for normal data set:
+        x <- FFTrees(formula = as.formula(paste(several_criterion[k],"~.")),
+             data = several_data[[k]],
+             main = name,
+             goal = "bacc",
+             goal.chase = "bacc",
+             goal.threshold = "bacc")
+
+        # Performance:
+        x_summary <- summary(x)
+        x_stats_1 <- x_summary$stats$train[1, ]
+
+        # get tree definitions;
+        x_fft_df <- get_fft_df(x)
+        fft_df <- x_fft_df[1, ]  # best training tree
+
+
+  
+  # use function loop_NA
+  results_list_dataframes[[k]] <-loop_pc(several_data[[k]], several_criterion[k], several_pcs, x, fft_df, x_stats_1)
+
+ } # for loop.
+  
+# Output: ----
+return(results_list_dataframes) # as list.
+
+} # loop_datasets.
+
+    ```
+
+
+```{r TEST-function-loop-datasets}
+
+loop_datasets(several_data = list(heartdisease, titanic), 
+              data_names = c("heartdisease", "titanic"), 
+              several_criterion = c("diagnosis", "survived"), 
+              several_pcs = c(0.25, 0.5))
+
+```
 
 
