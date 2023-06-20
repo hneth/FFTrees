@@ -5,6 +5,39 @@ date: "2023-06-19"
 output: html_document
 ---
 
+```{r Preparations}
+
+# get name of data set:
+get_object_name <- function(x){
+  deparse(substitute(x))
+}
+
+# Check:
+#get_object_name(heartdisease)
+```
+
+
+```{r Get-tree-for-original-data}
+
+#Build tree for normal data set:
+x <- FFTrees(formula = diagnosis ~.,
+             data = heartdisease,
+             main = get_object_name(heartdisease),
+             goal = "bacc",
+             goal.chase = "bacc",
+             goal.threshold = "bacc")
+
+# Performance:
+x_summary <- summary(x)
+x_stats_1 <- x_summary$stats$train[1, ]
+# x_stats_1
+
+# get tree definitions;
+x_fft_df <- get_fft_df(x)
+fft_df <- x_fft_df[1, ]  # best training tree
+```
+
+
 ```{r build-loop-NA-function}
 
 loop_NA <- function(data, criterion, pc, x, fft_df, x_stats_1){
@@ -58,14 +91,13 @@ y <- FFTrees(object = x,
 
 # Collect results:
 
-    # a) tree performance:
-    y_summary <- summary(y)
-    y_stats <- y_summary$stats$train
+# a) tree performance: 
+y_summary <- summary(y)
+y_stats <- y_summary$stats$train
 
-    # b) level stats:
-    y_level_stats <- y$trees$level_stats$train
-    NA_stats <- y_level_stats[nrow(y_level_stats) , c(25 :30)]
-
+# b) level stats:
+y_level_stats <- y$trees$level_stats$train
+NA_stats <- y_level_stats[nrow(y_level_stats) , c(25 :30)]
 
 # Combine:
 all_data_df <- cbind(y_stats, NA_stats)
@@ -89,6 +121,33 @@ return(results) # as data frame.
 
 } # loop_NA().
 ```
+
+
+
+
+```{r apply-loop-function-25-na}
+# use loop-NA-function, input = 25% NAs:
+heart_NA_25 <- loop_NA(heartdisease, "diagnosis", 0.25)
+```
+
+```{r apply-loop-function-50-na}
+# use loop-NA-function, input = 50% NAs:
+heart_NA_50 <- loop_NA(heartdisease, "diagnosis", 0.50)
+```
+
+```{r apply-loop-function-75-na}
+# use loop-NA-function, input = 75% NAs:
+heart_NA_75 <- loop_NA(heartdisease, "diagnosis", 0.75)
+```
+
+```{r apply-loop-function-100-na}
+# how many rows are in the data set:
+n <- nrow(heartdisease)
+
+# use loop-NA-function, input = 100% NAs:
+heart_NA_100 <- loop_NA(heartdisease, "diagnosis", n)
+```
+
 
 
 ```{r build-loop-pc-function}
@@ -117,135 +176,6 @@ return(results_dataframes)# as list.
 } # loop_pc.
 
     ```
-
-```{r build-loop-datasets-function}
-
-# as input a vector with different data sets for which you want data:
-
-loop_datasets <- function(several_data, data_names, several_criterion, several_pcs){
-  
-  # Preparations:
-  # length of vector, to know when to stop
-  n <- length(several_data)
-  
-  
-  # Initialize list to store results
-  results_list_dataframes <- vector("list", n)
-  
-  
-  # Loop 3:
-  for (k in 1:n) {
-    
-  # build tree with original data for each dataset:
-        # get name of data set:
-        name <- data_names[k]
-
-        #Build tree for normal data set:
-        x <- FFTrees(formula = as.formula(paste(several_criterion[k],"~.")),
-             data = several_data[[k]],
-             main = name,
-             goal = "bacc",
-             goal.chase = "bacc",
-             goal.threshold = "bacc")
-
-        # Performance:
-         x_summary <- summary(x)
-         x_stats_1 <- x_summary$stats$train[1, ]
-
-        # get tree definitions;
-        x_fft_df <- get_fft_df(x)
-        fft_df <- x_fft_df[1, ]  # best training tree
-
-
-  
-  # use function loop_NA
-  results_list_dataframes[[k]] <-loop_pc(several_data[[k]], several_criterion[k], several_pcs, x, fft_df, x_stats_1)
-  
- } # for loop.
-  
-# Output: ----
-return(results_list_dataframes) # as list.
-
-} # loop_datasets.
-
-    ```
-
-# Test ----
-
-
-
-```{r TEST-function-loop-datasets}
-
-test <- loop_datasets(several_data = list(heartdisease, titanic), 
-              data_names = c("heartdisease", "titanic"), 
-              several_criterion = c("diagnosis", "survived"), 
-              several_pcs = c(0.25))
-
-```
-
-
-
-
-
-
-# Checks and old code ----
-
-
-```{r Preparations}
-
-# get name of data set:
-get_object_name <- function(x){
-  deparse(substitute(x))
-}
-
-# Check:
-#get_object_name(heartdisease)
-```
-
-
-```{r Get-tree-for-original-data}
-
-#Build tree for normal data set:
-x <- FFTrees(formula = diagnosis ~.,
-             data = heartdisease,
-             main = get_object_name(heartdisease),
-             goal = "bacc",
-             goal.chase = "bacc",
-             goal.threshold = "bacc")
-
-# Performance:
-x_summary <- summary(x)
-x_stats_1 <- x_summary$stats$train[1, ]
-# x_stats_1
-
-# get tree definitions;
-x_fft_df <- get_fft_df(x)
-fft_df <- x_fft_df[1, ]  # best training tree
-```
-
-```{r apply-loop-function-25-na}
-# use loop-NA-function, input = 25% NAs:
-heart_NA_25 <- loop_NA(heartdisease, "diagnosis", 0.25)
-```
-
-```{r apply-loop-function-50-na}
-# use loop-NA-function, input = 50% NAs:
-heart_NA_50 <- loop_NA(heartdisease, "diagnosis", 0.50)
-```
-
-```{r apply-loop-function-75-na}
-# use loop-NA-function, input = 75% NAs:
-heart_NA_75 <- loop_NA(heartdisease, "diagnosis", 0.75)
-```
-
-```{r apply-loop-function-100-na}
-# how many rows are in the data set:
-n <- nrow(heartdisease)
-
-# use loop-NA-function, input = 100% NAs:
-heart_NA_100 <- loop_NA(heartdisease, "diagnosis", n)
-```
-
 
 
 ```{r CHECK-functionality-function}
@@ -281,4 +211,68 @@ df3 <- df_heart_NA[[3]]
 
 all.equal(df3, heart_NA_75)
 ```
+
+
+```{r build-loop-datasets-function}
+
+# as input a vector with different data sets for which you want data:
+
+loop_datasets <- function(several_data, data_names, several_criterion, several_pcs){
+  
+  # Preparations:
+  # length of vector, to know when to stop
+  n <- length(several_data)
+  
+  
+  # Initialize list to store results
+  results_list_dataframes <- vector("list", n)
+  
+  
+  # Loop 3:
+  for (k in 1:n) {
+    
+  # build tree with original data for each dataset:
+        # get name of data set:
+        name <- data_names[k]
+
+        #Build tree for normal data set:
+        x <- FFTrees(formula = as.formula(paste(several_criterion[k],"~.")),
+             data = several_data[[k]],
+             main = name,
+             goal = "bacc",
+             goal.chase = "bacc",
+             goal.threshold = "bacc")
+
+        # Performance:
+        x_summary <- summary(x)
+        x_stats_1 <- x_summary$stats$train[1, ]
+
+        # get tree definitions;
+        x_fft_df <- get_fft_df(x)
+        fft_df <- x_fft_df[1, ]  # best training tree
+
+
+  
+  # use function loop_NA
+  results_list_dataframes[[k]] <-loop_pc(several_data[[k]], several_criterion[k], several_pcs, x, fft_df, x_stats_1)
+
+ } # for loop.
+  
+# Output: ----
+return(results_list_dataframes) # as list.
+
+} # loop_datasets.
+
+    ```
+
+
+```{r TEST-function-loop-datasets}
+
+loop_datasets(several_data = list(heartdisease, titanic), 
+              data_names = c("heartdisease", "titanic"), 
+              several_criterion = c("diagnosis", "survived"), 
+              several_pcs = c(0.25, 0.5))
+
+```
+
 
