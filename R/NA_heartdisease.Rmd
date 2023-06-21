@@ -7,7 +7,8 @@ date: "2023-06-20"
 output: html_document
 ---
 
-Loop function (for multiple simulations): 
+# Define Loop functions (for multiple simulations) ----
+
 
 ```{r define-loop-function}
 
@@ -93,66 +94,392 @@ return(results) # as data frame.
 } # loop_NA().
 ```
 
+```{r define-loop-pc-function}
 
+# as input a vector with different pcs for which you want data:
 
+loop_pc <- function(data, data_name, criterion, several_pcs, x, fft_df, x_stats_1){
 
-```{r Preparations}
+  # Initialize list to store results
+  results_dataframes <-  list()
 
-# get name of data set:
-get_object_name <- function(x){
-  deparse(substitute(x))
-}
+  # length of vector, to know when to stop
+  n <- length(several_pcs)
 
-# Check:
-#get_object_name(heartdisease)
+  # Loop 2:
+  for (j in 1:n) {
+
+    # use function loop_NA
+    result_name <- paste0(data_name, "_", several_pcs[j]*100, "pc")
+    results_dataframes[[result_name]] <-loop_NA(data, criterion, several_pcs[j], x, fft_df, x_stats_1)
+
+  } # for loop.
+
+  # Output: ----
+  return(results_dataframes)# as list.
+
+} # loop_pc.
+
 ```
-## Data
 
-Describe current data:
+```{r define-loop-datasets-function}
 
-```{r describe-data}
-dd <- describe_data(heartdisease, 
-                    data_name = "heartdisease", 
-                    criterion_name = "diagnosis", 
+# as input a vector with different data sets for which you want data:
+
+loop_datasets <- function(several_data, data_names, several_criterion, several_pcs){
+
+  # Preparations:
+  # length of vector, to know when to stop
+  n <- length(several_data)
+
+
+  # Initialize list to store results
+  results_list_dataframes <-  list()
+  
+  # Initialize list to store results of Baseline-pc:
+  baseline_pc <- numeric(n)
+
+  
+  # Initialize two nummeric vectors to store results of Baseline-pc:
+  bl <- numeric(n)
+  pred_benchmark <- numeric(n)
+  
+  # Loop 3:
+  for (k in 1:n) {
+
+    # build tree with original data for each dataset:
+    # get name of data set:
+    name <- data_names[k]
+
+    #Build tree for normal data set:
+    x <- FFTrees(formula = as.formula(paste(several_criterion[k],"~.")),
+                 data = several_data[[k]],
+                 main = name,
+                 goal = "bacc",
+                 goal.chase = "bacc",
+                 goal.threshold = "bacc")
+
+    # Performance:
+    x_summary <- summary(x)
+    x_stats_1 <- x_summary$stats$train[1, ]
+
+    # get tree definitions;
+    x_fft_df <- get_fft_df(x)
+    fft_df <- x_fft_df[1, ]  # best training tree
+
+
+
+    # use function loop_NA
+    results_list_dataframes[[data_names[k]]] <-loop_pc(several_data[[k]], data_names[k], several_criterion[k], several_pcs, x, fft_df, x_stats_1)
+
+    
+    
+    # describe data for further table:
+    dd <- describe_data(several_data[[k]], 
+                    data_name = name, 
+                    criterion_name = several_criterion[k], 
                     baseline_value = TRUE)
 
-# Baseline:
-bl <- dd$Baseline_pct
+    # Baseline:
+    bl[k] <- dd$Baseline_pct
 
-# Minimum prediction performance (i.e., majority of criterion):
-pred_benchmark <- max(bl, 100 - bl)/100
-pred_benchmark
+    # Minimum prediction performance (i.e., majority of criterion):
+    pred_benchmark[k] <- max(bl[k], 100 - bl[k])/100
+    
+    # store baseline_pc:
+    baseline_pc[k] <- pred_benchmark[k]
+
+    
+  } # for loop.
+
+  # Output: ----
+  return(list(results = results_list_dataframes, baseline = baseline_pc)) # as list.
+
+} # loop_datasets.
+
 ```
 
 
-```{r Get-tree-for-original-data}
+# Run simulations, make graph: ----
 
-# Build tree for normal data set (without NA values):
-x <- FFTrees(formula = diagnosis ~.,
-             data = heartdisease,
-             main = get_object_name(heartdisease),
-             goal = "bacc",
-             goal.chase = "bacc",
-             goal.threshold = "bacc",
-             quiet = list(ini = FALSE, fin = FALSE, mis = FALSE, set = FALSE)
+```{r run-simulation}
+
+dfs <- loop_datasets(several_data = list(heartdisease, titanic, breastcancer),
+                      data_names = c("heartdisease", "titanic", "breastcancer"), # expl: the get_object_name <- function(x){deparse(substitute(x)) does not work this way, so we have to manually define names.
+                      several_criterion = c("diagnosis", "survived", "diagnosis"),
+                      several_pcs = c(0.25, 0.50, 0.75, 1))
+
+
+# assign names to output dfs:
+# heartdisease:
+heart_NA_25 <- dfs$results$heartdisease[["heartdisease_25pc"]]
+heart_NA_50 <- dfs$results$heartdisease[["heartdisease_50pc"]]
+heart_NA_75 <- dfs$results$heartdisease[["heartdisease_75pc"]]
+heart_NA_100 <- dfs$results$heartdisease[["heartdisease_100pc"]]
+
+
+# titanic:
+titanic_NA_25 <- dfs$results$titanic[["titanic_25pc"]]
+titanic_NA_50 <- dfs$results$titanic[["titanic_50pc"]]
+titanic_NA_75 <- dfs$results$titanic[["titanic_75pc"]]
+titanic_NA_100 <- dfs$results$titanic[["titanic_100pc"]]
+
+
+# breastcancer:
+breastcancer_NA_25 <- dfs$results$breastcancer[["breastcancer_25pc"]]
+breastcancer_NA_50 <- dfs$results$breastcancer[["breastcancer_50pc"]]
+breastcancer_NA_75 <- dfs$results$breastcancer[["breastcancer_75pc"]]
+breastcancer_NA_100 <- dfs$results$breastcancer[["breastcancer_100pc"]]
+
+```
+
+# for heartdisease: ----
+
+Collect key results (in df): 
+
+```{r key-results}
+key_results <- data.frame(matrix(NA, nrow = 5, ncol = 4))
+names(key_results) <- c("pc_NA", "mn_acc", "mn_bacc", "mn_mcu")
+
+# Baseline performance:
+key_results[1, "pc_NA"]   <- 0
+key_results[1, "mn_acc"]  <- heart_NA_25$acc[1]
+key_results[1, "mn_bacc"] <- heart_NA_25$bacc[1]
+key_results[1, "mn_mcu"]  <- heart_NA_25$mcu[1]
+
+# Row 2: 25% NA values:
+key_results[2, "pc_NA"]   <- 25
+key_results[2, "mn_acc"]  <- mean(heart_NA_25$acc[-1])
+key_results[2, "mn_bacc"] <- mean(heart_NA_25$bacc[-1])
+key_results[2, "mn_mcu"]  <- mean(heart_NA_25$mcu[-1])
+
+
+# Row 3: 50% NA values:
+key_results[3, "pc_NA"]   <- 50
+key_results[3, "mn_acc"]  <- mean(heart_NA_50$acc[-1])
+key_results[3, "mn_bacc"] <- mean(heart_NA_50$bacc[-1])
+key_results[3, "mn_mcu"]  <- mean(heart_NA_50$mcu[-1])
+
+# Row 4: 75% NA values:
+key_results[4, "pc_NA"]   <- 75
+key_results[4, "mn_acc"]  <- mean(heart_NA_75$acc[-1])
+key_results[4, "mn_bacc"] <- mean(heart_NA_75$bacc[-1])
+key_results[4, "mn_mcu"]  <- mean(heart_NA_75$mcu[-1])
+
+# Basically a sanity check: 
+# Row 5: 100% NA values:
+key_results[5, "pc_NA"]   <- 100
+key_results[5, "mn_acc"]  <- mean(heart_NA_100$acc[-1])
+key_results[5, "mn_bacc"] <- mean(heart_NA_100$bacc[-1])
+key_results[5, "mn_mcu"]  <- mean(heart_NA_100$mcu[-1])
+
+
+key_results
+```
+
+Plot results:
+
+```{r plot-key-results}
+# Upper benchmark: Best FFT without missing data: 
+plot(x = key_results$pc_NA, 
+     y = rep(key_results$mn_acc[1], nrow(key_results)), 
+     type = "l", 
+     col = unikn::Seegruen, lwd = 1, lty = 2, 
+     ylim = c(0, 1),
+     xlab = "Percent NA values", 
+     ylab = "Mean accuracy"
+     )
+grid()
+# Lower benchmark pred_benchmark (i.e., majority of criterion):
+lines(x = key_results$pc_NA, 
+      y = rep(dfs$baseline[1], nrow(key_results)), 
+      type = "l", 
+      col = unikn::Bordeaux, lwd = 1, lty = 2 
+      # ylim = c(0, 1),
+      # xlab = "Percent NA values", 
+      # ylab = "Mean accuracy"
 )
+# Actual accuracy:
+lines(x = key_results$pc_NA, 
+      y = key_results$mn_acc, 
+      type = "b", 
+      col = unikn::Seeblau, lwd = 2
+      # ylim = c(0, 1),
+      # xlab = "Percent NA values", 
+      # ylab = "Mean accuracy"
+)
+title(main = "Mean accuracy given missing values - heartdisease data")
+```
 
-# Performance:
-# print(x)
-# plot(x, what = "all")
 
-x_summary <- summary(x)
-x_stats_1 <- x_summary$stats$train[1, ]
-# x_stats_1
+# for titanic: ----
 
-# get tree definitions;
-x_fft_df <- get_fft_df(x)
-fft_df <- x_fft_df[1, ]  # definition of best training tree
-# fft_df
+Collect key results (in df): 
+
+```{r key-results}
+key_results <- data.frame(matrix(NA, nrow = 5, ncol = 4))
+names(key_results) <- c("pc_NA", "mn_acc", "mn_bacc", "mn_mcu")
+
+# Baseline performance:
+key_results[1, "pc_NA"]   <- 0
+key_results[1, "mn_acc"]  <- titanic_NA_25$acc[1]
+key_results[1, "mn_bacc"] <- titanic_NA_25$bacc[1]
+key_results[1, "mn_mcu"]  <- titanic_NA_25$mcu[1]
+
+# Row 2: 25% NA values:
+key_results[2, "pc_NA"]   <- 25
+key_results[2, "mn_acc"]  <- mean(titanic_NA_25$acc[-1])
+key_results[2, "mn_bacc"] <- mean(titanic_NA_25$bacc[-1])
+key_results[2, "mn_mcu"]  <- mean(titanic_NA_25$mcu[-1])
+
+
+# Row 3: 50% NA values:
+key_results[3, "pc_NA"]   <- 50
+key_results[3, "mn_acc"]  <- mean(titanic_NA_50$acc[-1])
+key_results[3, "mn_bacc"] <- mean(titanic_NA_50$bacc[-1])
+key_results[3, "mn_mcu"]  <- mean(titanic_NA_50$mcu[-1])
+
+# Row 4: 75% NA values:
+key_results[4, "pc_NA"]   <- 75
+key_results[4, "mn_acc"]  <- mean(titanic_NA_75$acc[-1])
+key_results[4, "mn_bacc"] <- mean(titanic_NA_75$bacc[-1])
+key_results[4, "mn_mcu"]  <- mean(titanic_NA_75$mcu[-1])
+
+# Basically a sanity check: 
+# Row 5: 100% NA values:
+key_results[5, "pc_NA"]   <- 100
+key_results[5, "mn_acc"]  <- mean(titanic_NA_100$acc[-1])
+key_results[5, "mn_bacc"] <- mean(titanic_NA_100$bacc[-1])
+key_results[5, "mn_mcu"]  <- mean(titanic_NA_100$mcu[-1])
+
+
+key_results
+```
+
+Plot results:
+
+```{r plot-key-results}
+# Upper benchmark: Best FFT without missing data: 
+plot(x = key_results$pc_NA, 
+     y = rep(key_results$mn_acc[1], nrow(key_results)), 
+     type = "l", 
+     col = unikn::Seegruen, lwd = 1, lty = 2, 
+     ylim = c(0, 1),
+     xlab = "Percent NA values", 
+     ylab = "Mean accuracy"
+     )
+grid()
+# Lower benchmark pred_benchmark (i.e., majority of criterion):
+lines(x = key_results$pc_NA, 
+      y = rep(dfs$baseline[2], nrow(key_results)), 
+      type = "l", 
+      col = unikn::Bordeaux, lwd = 1, lty = 2 
+      # ylim = c(0, 1),
+      # xlab = "Percent NA values", 
+      # ylab = "Mean accuracy"
+)
+# Actual accuracy:
+lines(x = key_results$pc_NA, 
+      y = key_results$mn_acc, 
+      type = "b", 
+      col = unikn::Seeblau, lwd = 2
+      # ylim = c(0, 1),
+      # xlab = "Percent NA values", 
+      # ylab = "Mean accuracy"
+)
+title(main = "Mean accuracy given missing values - titanic data")
 ```
 
 
 
+# for breastcancer: ----
+
+Collect key results (in df): 
+
+```{r key-results}
+key_results <- data.frame(matrix(NA, nrow = 5, ncol = 4))
+names(key_results) <- c("pc_NA", "mn_acc", "mn_bacc", "mn_mcu")
+
+# Baseline performance:
+key_results[1, "pc_NA"]   <- 0
+key_results[1, "mn_acc"]  <- breastcancer_NA_25$acc[1]
+key_results[1, "mn_bacc"] <- breastcancer_NA_25$bacc[1]
+key_results[1, "mn_mcu"]  <- breastcancer_NA_25$mcu[1]
+
+# Row 2: 25% NA values:
+key_results[2, "pc_NA"]   <- 25
+key_results[2, "mn_acc"]  <- mean(breastcancer_NA_25$acc[-1])
+key_results[2, "mn_bacc"] <- mean(breastcancer_NA_25$bacc[-1])
+key_results[2, "mn_mcu"]  <- mean(breastcancer_NA_25$mcu[-1])
+
+
+# Row 3: 50% NA values:
+key_results[3, "pc_NA"]   <- 50
+key_results[3, "mn_acc"]  <- mean(breastcancer_NA_50$acc[-1])
+key_results[3, "mn_bacc"] <- mean(breastcancer_NA_50$bacc[-1])
+key_results[3, "mn_mcu"]  <- mean(breastcancer_NA_50$mcu[-1])
+
+# Row 4: 75% NA values:
+key_results[4, "pc_NA"]   <- 75
+key_results[4, "mn_acc"]  <- mean(breastcancer_NA_75$acc[-1])
+key_results[4, "mn_bacc"] <- mean(breastcancer_NA_75$bacc[-1])
+key_results[4, "mn_mcu"]  <- mean(breastcancer_NA_75$mcu[-1])
+
+# Basically a sanity check: 
+# Row 5: 100% NA values:
+key_results[5, "pc_NA"]   <- 100
+key_results[5, "mn_acc"]  <- mean(breastcancer_NA_100$acc[-1])
+key_results[5, "mn_bacc"] <- mean(breastcancer_NA_100$bacc[-1])
+key_results[5, "mn_mcu"]  <- mean(breastcancer_NA_100$mcu[-1])
+
+
+key_results
+```
+
+Plot results:
+
+```{r plot-key-results}
+# Upper benchmark: Best FFT without missing data: 
+plot(x = key_results$pc_NA, 
+     y = rep(key_results$mn_acc[1], nrow(key_results)), 
+     type = "l", 
+     col = unikn::Seegruen, lwd = 1, lty = 2, 
+     ylim = c(0, 1),
+     xlab = "Percent NA values", 
+     ylab = "Mean accuracy"
+     )
+grid()
+# Lower benchmark pred_benchmark (i.e., majority of criterion):
+lines(x = key_results$pc_NA, 
+      y = rep(dfs$baseline[2], nrow(key_results)), 
+      type = "l", 
+      col = unikn::Bordeaux, lwd = 1, lty = 2 
+      # ylim = c(0, 1),
+      # xlab = "Percent NA values", 
+      # ylab = "Mean accuracy"
+)
+# Actual accuracy:
+lines(x = key_results$pc_NA, 
+      y = key_results$mn_acc, 
+      type = "b", 
+      col = unikn::Seeblau, lwd = 2
+      # ylim = c(0, 1),
+      # xlab = "Percent NA values", 
+      # ylab = "Mean accuracy"
+)
+title(main = "Mean accuracy given missing values - breastcancer data")
+```
+
+
+
+
+
+
+
++++ here now +++ 
+
+
+# OLD ----
 
 ## Run simulations
 
@@ -337,9 +664,11 @@ title(main = "Mean accuracy given missing values")
 
 
 
-## Issues and potential problems 
 
-+++ here now +++ 
+
+
+
+# Issues and potential problems ----
 
 
 ### 1. Using <NA> in categorical predictors
