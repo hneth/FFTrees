@@ -96,15 +96,6 @@ return(results) # as data frame.
 
 
 
-
-
-
-
-
-
-
-
-
 ```{r Preparations}
 
 # get name of data set:
@@ -114,6 +105,23 @@ get_object_name <- function(x){
 
 # Check:
 #get_object_name(heartdisease)
+```
+## Data
+
+Describe current data:
+
+```{r describe-data}
+dd <- describe_data(heartdisease, 
+                    data_name = "heartdisease", 
+                    criterion_name = "diagnosis", 
+                    baseline_value = TRUE)
+
+# Baseline:
+bl <- dd$Baseline_pct
+
+# Minimum prediction performance (i.e., majority of criterion):
+pred_benchmark <- max(bl, 100 - bl)/100
+pred_benchmark
 ```
 
 
@@ -274,6 +282,86 @@ heart_NA_100 <- loop_NA(data = heartdisease,
 ```
 
 
+### Results 100% NA
 
+```{r results-100-na}
+heart_NA_100
+```
+
+Collect key results (in df): 
+
+```{r key-results-100}
+# key_results <- data.frame(matrix(NA, nrow = 4, ncol = 3))
+# names(key_results) <- c("pc_NA", "mn_bacc", "mn_mcu")
+# Row 4: 75% NA values:
+key_results[5, "pc_NA"]   <- 100
+key_results[5, "mn_acc"]  <- mean(heart_NA_100$acc[-1])
+key_results[5, "mn_bacc"] <- mean(heart_NA_100$bacc[-1])
+key_results[5, "mn_mcu"]  <- mean(heart_NA_100$mcu[-1])
+key_results
+```
+
+### Plot key results:
+
+```{r plot-key-results}
+# Upper benchmark: Best FFT without missing data: 
+plot(x = key_results$pc_NA, 
+     y = rep(key_results$mn_acc[1], nrow(key_results)), 
+     type = "l", 
+     col = unikn::Seegruen, lwd = 1, lty = 2, 
+     ylim = c(0, 1),
+     xlab = "Percent NA values", 
+     ylab = "Mean accuracy"
+     )
+grid()
+# Lower benchmark pred_benchmark (i.e., majority of criterion):
+lines(x = key_results$pc_NA, 
+      y = rep(pred_benchmark, nrow(key_results)), 
+      type = "l", 
+      col = unikn::Bordeaux, lwd = 1, lty = 2 
+      # ylim = c(0, 1),
+      # xlab = "Percent NA values", 
+      # ylab = "Mean accuracy"
+)
+# Actual accuracy:
+lines(x = key_results$pc_NA, 
+      y = key_results$mn_acc, 
+      type = "b", 
+      col = unikn::Seeblau, lwd = 2
+      # ylim = c(0, 1),
+      # xlab = "Percent NA values", 
+      # ylab = "Mean accuracy"
+)
+title(main = "Mean accuracy given missing values")
+```
+
+
+
+## Issues and potential problems 
+
++++ here now +++ 
+
+
+### 1. Using <NA> in categorical predictors
+
+- When creating the basic FFT _without_ any `NA` values, 
+the mechanism for _categorical_ predictors (i.e., treating `NA` as a separate `<NA>` category) is not being used or tested.  
+Thus, we should create the initial FFT (and corresponding performance baselines) for datasets with _some_ `NA` values (e.g., 10%).
+
+
+### 2. Dealing with NA in final predictors
+
+- The current default for coping with `NA` values in final node 
+appears to be to assign all cases 
+to the _majority_ class (as only 2 types of errors occur): 
+`fin_NA_pred = "majority"` (in **FFTrees** v2.0.0). 
+
+- Done: Switched default to `fin_NA_pred = "baseline"` in `fftrees_apply()` (i.e., biased coin flip with both outcomes).
+
+
+### 3. Value of mcu?
+
+- Why is the final `mcu` value (for simulations with 100% NA values) 
+a value of\ 2, rather than\ 3 (for FFT `fft_df` with 3\ nodes)? 
 
 <!-- eof. -->
