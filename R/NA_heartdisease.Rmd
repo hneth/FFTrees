@@ -7,44 +7,6 @@ date: "2023-06-20"
 output: html_document
 ---
 
-```{r Preparations}
-
-# get name of data set:
-get_object_name <- function(x){
-  deparse(substitute(x))
-}
-
-# Check:
-#get_object_name(heartdisease)
-```
-
-
-```{r Get-tree-for-original-data}
-
-# Build tree for normal data set (without NA values):
-x <- FFTrees(formula = diagnosis ~.,
-             data = heartdisease,
-             main = get_object_name(heartdisease),
-             goal = "bacc",
-             goal.chase = "bacc",
-             goal.threshold = "bacc",
-             quiet = list(ini = FALSE, fin = FALSE, mis = FALSE, set = FALSE)
-)
-
-# Performance:
-# print(x)
-# plot(x, what = "all")
-
-x_summary <- summary(x)
-x_stats_1 <- x_summary$stats$train[1, ]
-# x_stats_1
-
-# get tree definitions;
-x_fft_df <- get_fft_df(x)
-fft_df <- x_fft_df[1, ]  # definition of best training tree
-# fft_df
-```
-
 Loop function (for multiple simulations): 
 
 ```{r define-loop-function}
@@ -131,6 +93,59 @@ return(results) # as data frame.
 } # loop_NA().
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+```{r Preparations}
+
+# get name of data set:
+get_object_name <- function(x){
+  deparse(substitute(x))
+}
+
+# Check:
+#get_object_name(heartdisease)
+```
+
+
+```{r Get-tree-for-original-data}
+
+# Build tree for normal data set (without NA values):
+x <- FFTrees(formula = diagnosis ~.,
+             data = heartdisease,
+             main = get_object_name(heartdisease),
+             goal = "bacc",
+             goal.chase = "bacc",
+             goal.threshold = "bacc",
+             quiet = list(ini = FALSE, fin = FALSE, mis = FALSE, set = FALSE)
+)
+
+# Performance:
+# print(x)
+# plot(x, what = "all")
+
+x_summary <- summary(x)
+x_stats_1 <- x_summary$stats$train[1, ]
+# x_stats_1
+
+# get tree definitions;
+x_fft_df <- get_fft_df(x)
+fft_df <- x_fft_df[1, ]  # definition of best training tree
+# fft_df
+```
+
+
+
+
 ## Run simulations
 
 ### Run 25% NA
@@ -139,7 +154,10 @@ return(results) # as data frame.
 # use loop-function, input = 25% nas:
 heart_NA_25 <- loop_NA(data = heartdisease, 
                        criterion = "diagnosis", 
-                       pc = 0.25)
+                       pc = 0.25,
+                        x = x,
+                       fft_df = fft_df,
+                       x_stats_1 = x_stats_1)
 ```
 
 ### Results 25% NA
@@ -173,7 +191,12 @@ key_results
 
 ```{r apply-loop-function-50-na}
 # use loop-NA-function, input = 50% NAs:
-heart_NA_50 <- loop_NA(heartdisease, "diagnosis", 0.50)
+heart_NA_50 <- loop_NA(data = heartdisease,
+                       criterion = "diagnosis",
+                       pc = 0.50,
+                       x = x,
+                       fft_df = fft_df,
+                       x_stats_1 = x_stats_1)
 ```
 
 ### Results 50% NA
@@ -202,7 +225,12 @@ key_results
 
 ```{r apply-loop-function-75-na}
 # use loop-NA-function, input = 75% NAs:
-heart_NA_75 <- loop_NA(heartdisease, "diagnosis", 0.75)
+heart_NA_75 <- loop_NA(data = heartdisease,
+                       criterion = "diagnosis",
+                       pc = 0.75,
+                       x = x,
+                       fft_df = fft_df,
+                       x_stats_1 = x_stats_1)
 ```
 
 ### Results 75% NA
@@ -237,7 +265,12 @@ Basically a sanity check:
 n <- nrow(heartdisease)
 
 # use loop-NA-function, input = 100% NAs:
-heart_NA_100 <- loop_NA(heartdisease, "diagnosis", n)
+heart_NA_100 <- loop_NA(data = heartdisease, 
+                        criterion = "diagnosis",
+                        pc = n, 
+                        x = x,
+                        fft_df = fft_df,
+                        x_stats_1 = x_stats_1)
 ```
 
 
