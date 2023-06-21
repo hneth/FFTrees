@@ -231,6 +231,10 @@ breastcancer_NA_50 <- dfs$results$breastcancer[["breastcancer_50pc"]]
 breastcancer_NA_75 <- dfs$results$breastcancer[["breastcancer_75pc"]]
 breastcancer_NA_100 <- dfs$results$breastcancer[["breastcancer_100pc"]]
 
+
+# dfs$baseline => 0.5412541 0.6769650 0.6500732
+ 
+
 ```
 
 # for heartdisease: ----
