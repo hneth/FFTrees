@@ -740,8 +740,8 @@ summary(y)
 ```
 
 Comparing the accuracy statistics of our new FFTs (in object `y`) to our
-original FFTs (in object `x`) shows that swapping the 2nd and 3rd cue
-had hardly an effect. Upon reflection, this is not surprising: Most
+original FFTs (in object `x`) shows that swapping the 2nd and 3rd cues
+hardly had an effect. Upon reflection, this is not surprising: Most
 people are still classified into the same categories as before. However,
 if we were to evaluate the costs of classification (e.g., by considering
 the `pci` and `mcu` measures or the `cost` measures for cue usage), we
@@ -754,9 +754,10 @@ for a set of customized FFTs defined by the `tree.definitions` argument.
 This circumvented the FFT building algorithms and used the provided FFT
 definitions instead. Thus, the ordinary distinction between training and
 test data no longer applies in this context: As no model is being fitted
-here, both sets were used to evaluate the FFTs in `tree.definitions` on
-these data. Acknowledging this, we may use the full dataset of
-`heartdisease`, rather than splitting it into two distinct subsets:
+here, both sets were used to evaluate (or “test”) the FFTs in
+`tree.definitions` on these data. Acknowledging this, we may use the
+full dataset of `heartdisease`, rather than splitting it into two
+distinct subsets:
 
 ``` r
 # Create a new FFTrees object z:
