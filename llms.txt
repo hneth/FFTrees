@@ -1,4 +1,4 @@
-# FFTrees 2.1.0
+# FFTrees 2.1.0.9001
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/FFTrees)](https://CRAN.R-project.org/package=FFTrees)
@@ -52,14 +52,42 @@ included in **FFTrees**:
 library(FFTrees)  # load package
 ```
 
+### Questions answered by FFTs
+
+A *fast-and-frugal tree* (FFT) provides answers to binary prediction
+problems like:
+
+- Which of 2 categories should I predict for each individual case in the
+  data?
+- How successful is this prediction process for a sample of cases?
+
+To *create* FFTs, we must answer 2 key questions:
+
+- Which variables should we use to predict the criterion?
+- How should we combine those predictor variables into FFTs?
+
+Once we have created FFTs, questions regarding their *performance*
+include:
+
+- How accurate are the predictions of a specific FFT?
+- How costly are the predictions of each algorithm?
+
+Answering these performance-related questions requires applying FFTs to
+data.
+
+The **FFTrees** package answers these questions by creating, evaluating,
+and visualizing FFTs.
+
 ### Using data
 
-The `heartdisease` data provides medical information for 303 patients
-that were examined for heart disease. The full data contains a binary
-criterion variable describing the true state of each patient and were
-split into two subsets: A `heart.train` set for fitting decision trees,
-and `heart.test` set for a testing these trees. Here are the first rows
-and columns of both subsets of the `heartdisease` data:
+Any prediction problem requires some data that contains some predictors
+and a criterion variable. The `heartdisease` data provides medical
+information for 303 patients that were examined for heart disease. The
+full data contains a binary criterion variable describing the true state
+of each patient and were split into two subsets: A `heart.train` set for
+fitting decision trees, and `heart.test` set for a testing these trees.
+Here are the first rows and columns of both subsets of the
+`heartdisease` data:
 
 - `heart.train` (the training / fitting data) describes 150 patients:
 
@@ -94,22 +122,6 @@ Our challenge is to predict each patient’s `diagnosis` — a column of
 logical values indicating the true state of each patient (i.e., `TRUE`
 or `FALSE`, based on the patient suffering or not suffering from heart
 disease) — from the values of potential predictors.
-
-### Questions answered by FFTs
-
-To solve binary classification problems by FFTs, we must answer two key
-questions:
-
-- Which of the variables should we use to predict the criterion?
-- How should we use and combine predictor variables into FFTs?
-
-Once we have created some FFTs, additional questions include:
-
-- How accurate are the predictions of a specific FFT?
-- How costly are the predictions of each algorithm?
-
-The **FFTrees** package answers these questions by creating, evaluating,
-and visualizing FFTs.
 
 ### Creating fast-and-frugal trees (FFTs)
 
@@ -247,7 +259,7 @@ your experiences (e.g., [on
 GitHub](https://github.com/ndphillips/FFTrees/issues)) so we can
 continue developing the package.
 
-By 2025, over 150 scientific publications have used or cited **FFTrees**
+By 2026, over 160 scientific publications have used or cited **FFTrees**
 (see [Google
 Scholar](https://scholar.google.com/scholar?oi=bibs&hl=en&cites=205528310591558601)
 for the full list). Examples include:
@@ -285,7 +297,7 @@ for the full list). Examples include:
 
 ------------------------------------------------------------------------
 
-\[File `README.Rmd` last updated on 2025-09-03.\]
+\[File `README.Rmd` last updated on 2026-04-28.\]
 
 # Package index
 

@@ -335,6 +335,7 @@ heart.fft <- FFTrees(formula = diagnosis ~ .,
                      )
 #> ✔ Created an FFTrees object.
 #>   Ranking 13 cues:  ■■■■■■■■                          23% | ETA:  1s
+#>   Ranking 13 cues:  ■■■■■■■■■■■■■■■                   46% | ETA:  0s
 #>   Ranking 13 cues:  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> 
 #> ✔ Ranked 13 cues (optimizing 'bacc').
