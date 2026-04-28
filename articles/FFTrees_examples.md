@@ -183,24 +183,24 @@ and `sporepc` cues.
 
 The `iris.v` dataset contains data about 150 flowers (see
 [`?iris.v`](https://www.nathanieldphillips.co/FFTrees/reference/iris.v.md)).
-Our goal is to predict which flowers are of the class *Virginica*. In
-this example, we’ll create trees using the entire dataset (without
-splitting the available data into explicit training vs. test subsets),
-so that we are really fitting the data, rather than engaging in genuine
-prediction:
+Our present goal is to predict which flowers are of the class
+*Virginica*. In this example, we create trees using the entire dataset
+(without splitting the available data into explicit training vs. test
+subsets), so that we are really fitting the data, rather than engaging
+in prediction:
 
 ``` r
 # Create FFTrees object for iris data:
 iris_fft <- FFTrees(formula = virginica ~.,
                     data = iris.v,
-                    main = "Iris viginica",
+                    main = "Iris virginica",
                     decision.labels = c("Not-Vir", "Vir"))
 ```
 
 The **FFTrees** package provides various functions to inspect the
-`FFTrees` object `iris_fft`. For summary information on the best
+`FFTrees` object `iris_fft`. For summary information on the best
 training tree, we can print the `FTrees` object (by evaluating
-`iris_fft` or `print(iris_fft)`). Alternatively, we could visualize the
+`iris_fft` or `print(iris_fft)`). Alternatively, we can visualize the
 tree (via `plot(iris_fft)`) or summarize the `FFTrees` object (via
 `summary(iris_fft)`):
 
@@ -231,7 +231,7 @@ plot(iris_fft, what = "cues")
 ![](FFTrees_examples_files/figure-html/iris-plot-cues-1.png)
 
 It looks like the two cues `pet.len` and `pet.wid` are the best
-predictors for this dataset. Based on this insight, we should expect the
+predictors for this data. Based on this insight, we should expect the
 final trees will likely use one or both of these cues.
 
 #### Visualizing FFT performance
