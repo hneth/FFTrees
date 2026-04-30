@@ -31,6 +31,7 @@ knitr::opts_chunk$set(collapse = FALSE,
 library(FFTrees)
 ```
 
+
 ## Visualizing FFTrees 
 
 The **FFTrees** package makes it very easy to visualize and evaluate fast-and-frugal trees (FFTs): 
@@ -121,6 +122,7 @@ By contrast, `age`\ (3) seems a pretty poor cue for predicting survival on its o
 
 Inspecting cue accuracies can provide valuable information for constructing FFTs. 
 While they provide lower bounds on the performance of trees (as combining cues is only worthwhile when this yields a benefit), even poor individual cues can shine in combination with other predictors. 
+
 
 ### Visualizing FFTs and their performance 
 
