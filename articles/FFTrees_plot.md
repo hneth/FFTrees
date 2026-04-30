@@ -54,6 +54,7 @@ well as binary categories specifying age, sex, and survival information.
 To get a first impression, we inspect a random sample of cases:
 
 ``` r
+
 set.seed(12)  # reproducible randomness
 rcases <- sort(sample(1:nrow(titanic), 10))
 
@@ -74,7 +75,7 @@ knitr::kable(titanic[rcases, ], caption = "A sample of 10 observations from the 
 | 1271 | third  | child | male   | FALSE    |
 | 1500 | crew   | adult | male   | TRUE     |
 
-A sample of 10 observations from the `titanic` data.
+A sample of 10 observations from the `titanic` data. {.table}
 
 Our current goal is to fit FFTs to this dataset. This essentially asks:
 
@@ -85,6 +86,7 @@ First, let’s create an `FFTrees` object (called `titanic.fft`) from the
 `titanic` dataset:
 
 ``` r
+
 # Create FFTs for the titanic data:
 titanic.fft <- FFTrees(formula = survived ~.,
                        data = titanic, 
@@ -109,6 +111,7 @@ apply the function to the `titanic.fft` object to see how accurate each
 of the cues were on their own in predicting survival:
 
 ``` r
+
 plot(titanic.fft, what = "cues", main = "Cues predicting Titanic survival")
 ```
 
@@ -143,6 +146,7 @@ To visualize the tree from an `FFTrees` object, use
 of the trees (Tree #1, i.e., the best one, given our current goal):
 
 ``` r
+
 plot(titanic.fft, tree = 1)
 ```
 
@@ -152,7 +156,7 @@ object.](FFTrees_plot_files/figure-html/titanic-plot-1.png)
 **Figure 2**: Plotting the best FFT of an `FFTrees` object.
 
 The resulting plot visualizes one out of
-`r`titanic.fft$trees$n`\ possible trees in the`titanic.fft`object. As`tree
+`r`titanic.fft$`trees`$n`\ possible trees in the`titanic.fft`object. As`tree
 =
 1`corresponds to the best tree given our current`goal`for selecting FFTs, we could have plotted the same tree by specifying`tree
 = ‘best.train’\`.
@@ -238,6 +242,7 @@ and how various elements are being displayed.
 The following examples illustrate the wide range of corresponding plots:
 
 ``` r
+
 # Plot tree diagram with icon arrays:
 plot(titanic.fft, what = "icontree", 
      n.per.icon = 50, show.iconguide = TRUE)
@@ -249,6 +254,7 @@ nodes.](FFTrees_plot_files/figure-html/titanic-what-tree-1.png)
 **Figure 3**: An FFT diagram with icon arrays on exit nodes.
 
 ``` r
+
 # Plot only the performance comparison in ROC space:
 plot(titanic.fft, what = "roc")
 ```
@@ -265,6 +271,7 @@ space.](FFTrees_plot_files/figure-html/titanic-what-roc-1.png)
   plot. For example:
 
 ``` r
+
 # Hide some elements of the FFT plot: 
 plot(titanic.fft, 
      show.icons = FALSE,     # hide icons
@@ -300,6 +307,7 @@ specified consistently. For instance, the following command would
 visualize the best training tree in `titanic.fft`:
 
 ``` r
+
 plot(titanic.fft, tree = "best.train")
 ```
 
@@ -307,6 +315,7 @@ as `data = "train"` by default. However, the following analog expression
 would fail:
 
 ``` r
+
 plot(titanic.fft, tree = "best.test")
 ```
 
@@ -349,6 +358,7 @@ distinct 50% testing set. (Alternatively, we could specify a dedicated
 test data set by using the `data.test` argument.)
 
 ``` r
+
 set.seed(100)  # for replicability of the training/test split
 titanic.pred.fft <- FFTrees(formula = survived ~.,
                             data = titanic,
@@ -361,6 +371,7 @@ titanic.pred.fft <- FFTrees(formula = survived ~.,
 Here is the best training tree applied to the *training* data:
 
 ``` r
+
 # print(titanic.pred.fft, tree = 1)
 plot(titanic.pred.fft, tree = 1)
 ```
@@ -381,6 +392,7 @@ CART performed even worse than Tree #1.
 Now let’s inspect the performance of the same tree on the *test* data:
 
 ``` r
+
 # print(titanic.pred.fft, data = "test", tree = 1)
 plot(titanic.pred.fft, data = "test", tree = 1)
 ```
@@ -401,6 +413,7 @@ Let’s visualize the prediction performance of Tree #2, the most liberal
 tree (i.e., with the highest sensitivity):
 
 ``` r
+
 plot(titanic.pred.fft, data = "test", tree = 2)
 ```
 
@@ -424,12 +437,12 @@ transparent when using **FFTrees**.
 Here is a complete list of the vignettes available in the **FFTrees**
 package:
 
-|     | Vignette                                                                                                 | Description                                                                                                                        |
-|----:|:---------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------|
-|     | [Main guide: FFTrees overview](https://www.nathanieldphillips.co/FFTrees/articles/guide.md)              | An overview of the **FFTrees** package                                                                                             |
-|   1 | [Tutorial: FFTs for heart disease](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_heart.md)  | An example of using [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) to model heart disease diagnosis |
-|   2 | [Accuracy statistics](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_accuracy_statistics.md) | Definitions of accuracy statistics used throughout the package                                                                     |
-|   3 | [Creating FFTs with FFTrees()](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_function.md)   | Details on the main [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) function                         |
-|   4 | [Manually specifying FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_mytree.md)         | How to directly create FFTs without using the built-in algorithms                                                                  |
-|   5 | [Visualizing FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_plot.md)                   | Plotting `FFTrees` objects, from full trees to icon arrays                                                                         |
-|   6 | [Examples of FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_examples.md)               | Examples of FFTs from different datasets contained in the package                                                                  |
+|  | Vignette | Description |
+|---:|:---|:---|
+|  | [Main guide: FFTrees overview](https://www.nathanieldphillips.co/FFTrees/articles/guide.md) | An overview of the **FFTrees** package |
+| 1 | [Tutorial: FFTs for heart disease](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_heart.md) | An example of using [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) to model heart disease diagnosis |
+| 2 | [Accuracy statistics](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_accuracy_statistics.md) | Definitions of accuracy statistics used throughout the package |
+| 3 | [Creating FFTs with FFTrees()](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_function.md) | Details on the main [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) function |
+| 4 | [Manually specifying FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_mytree.md) | How to directly create FFTs without using the built-in algorithms |
+| 5 | [Visualizing FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_plot.md) | Plotting `FFTrees` objects, from full trees to icon arrays |
+| 6 | [Examples of FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_examples.md) | Examples of FFTs from different datasets contained in the package |

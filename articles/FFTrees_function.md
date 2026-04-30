@@ -44,6 +44,7 @@ test set (`heart.test`). Here is a peak at the corresponding data
 frames:
 
 ``` r
+
 # Training data: 
 head(heart.train)
 ```
@@ -60,6 +61,7 @@ head(heart.train)
     #> # ℹ 3 more variables: slope <chr>, ca <dbl>, thal <chr>
 
 ``` r
+
 # Testing data:
 head(heart.test)
 ```
@@ -99,6 +101,7 @@ include all other (independent) variables with
 `formula = diagnosis ~ .`:
 
 ``` r
+
 # Create an FFTrees object called heart.fft predicting diagnosis: 
 heart.fft <- FFTrees(formula = diagnosis ~.,
                      data = heart.train,
@@ -117,6 +120,7 @@ elements in an `FFTrees` object. We can obtain these elements by
 printing their names:
 
 ``` r
+
 # See the elements of an FFTrees object:
 names(heart.fft)
 ```
@@ -168,6 +172,7 @@ and obtain the information about the tree with the highest value of the
 accuracy `wacc`:
 
 ``` r
+
 # Training performance of the best tree (on "train" data, given current goal):
 heart.fft  # same as: print(heart.fft, data = "train")
 ```
@@ -212,6 +217,7 @@ see the corresponding prediction performance, we could alternatively ask
 for:
 
 ``` r
+
 # Prediction performance of the best training tree (on "test" data): 
 print(heart.fft, data = "test")
 ```
@@ -225,24 +231,24 @@ an FFT’s performance is contained in the **Accuracy** panel (for either
 training or prediction). Here is a description of the frequency counts
 and corresponding statistics provided:
 
-| Statistic        | Long name                    | Definition                                                                                                                                                                    |
-|:-----------------|:-----------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| *Frequencies*:   |                              |                                                                                                                                                                               |
-| `hi`             | Number of hits               | $N\left( \text{Decision} = 1 \land \text{Truth} = 1 \right)$                                                                                                                  |
-| `mi`             | Number of misses             | $N\left( \text{Decision} = 0 \land \text{Truth} = 1 \right)$                                                                                                                  |
-| `fa`             | Number of false-alarms       | $N\left( \text{Decision} = 1 \land \text{Truth} = 0 \right)$                                                                                                                  |
-| `cr`             | Number of correct rejections | $N\left( \text{Decision} = 0 \land \text{Truth} = 0 \right)$                                                                                                                  |
-| `N`              | Number of cases              | The total number of cases considered.                                                                                                                                         |
-| *Probabilities*: |                              |                                                                                                                                                                               |
-| `acc`            | Accuracy                     | The percentage of cases that were correctly classified.                                                                                                                       |
-| `ppv`            | Positive predictive value    | The percentage (or conditional probability) of positive decisions being correct (i.e., True + cases).                                                                         |
-| `npv`            | Negative predictive value    | The percentage (or conditional probability) of negative decisions being correct (i.e., True - cases).                                                                         |
-| `wacc`           | Weighted accuracy            | The weighted average of sensitivity and specificity, where sensitivity is weighted by `sens.w` (by default, `sens.w = .50`).                                                  |
-| `sens`           | Sensitivity                  | The percentage (or conditional probability) of true positive cases being correctly classified.                                                                                |
-| `spec`           | Specificity                  | The percentage (or conditional probability) of true negative cases being correctly classified.                                                                                |
-| *Frugality*:     |                              |                                                                                                                                                                               |
-| `mcu`            | Mean cues used               | On average, how many cues were needed to classify cases? In other words, what percent of the available information was used on average?                                       |
-| `pci`            | Percent cues ignored         | The percent of data that was *ignored* when classifying cases with a given tree. This is identical to `mcu / cues.n`, where `cues.n` is the total number of cues in the data. |
+| Statistic | Long name | Definition |
+|:---|:---|:---|
+| *Frequencies*: |  |  |
+| `hi` | Number of hits | $`N(\text{Decision} = 1 \land \text{Truth} = 1)`$ |
+| `mi` | Number of misses | $`N(\text{Decision} = 0 \land \text{Truth} = 1)`$ |
+| `fa` | Number of false-alarms | $`N(\text{Decision} = 1 \land \text{Truth} = 0)`$ |
+| `cr` | Number of correct rejections | $`N(\text{Decision} = 0 \land \text{Truth} = 0)`$ |
+| `N` | Number of cases | The total number of cases considered. |
+| *Probabilities*: |  |  |
+| `acc` | Accuracy | The percentage of cases that were correctly classified. |
+| `ppv` | Positive predictive value | The percentage (or conditional probability) of positive decisions being correct (i.e., True + cases). |
+| `npv` | Negative predictive value | The percentage (or conditional probability) of negative decisions being correct (i.e., True - cases). |
+| `wacc` | Weighted accuracy | The weighted average of sensitivity and specificity, where sensitivity is weighted by `sens.w` (by default, `sens.w = .50`). |
+| `sens` | Sensitivity | The percentage (or conditional probability) of true positive cases being correctly classified. |
+| `spec` | Specificity | The percentage (or conditional probability) of true negative cases being correctly classified. |
+| *Frugality*: |  |  |
+| `mcu` | Mean cues used | On average, how many cues were needed to classify cases? In other words, what percent of the available information was used on average? |
+| `pci` | Percent cues ignored | The percent of data that was *ignored* when classifying cases with a given tree. This is identical to `mcu / cues.n`, where `cues.n` is the total number of cues in the data. |
 
 **Table 1**: Description of FFTs’ basic frequencies and corresponding
 accuracy and speed/frugality statistics.
@@ -253,6 +259,7 @@ numeric `tree` parameter. For instance, the following expression would
 provide the basic performance characteristics of Tree 3:
 
 ``` r
+
 # Performance of alternative FFTs (Tree 3) in an FFTrees object: 
 print(heart.fft, tree = 3, data = "test")
 ```
@@ -276,6 +283,7 @@ the marginal cue accuracies in the test data (using the thresholds
 calculated from the training data):
 
 ``` r
+
 # Decision thresholds and marginal classification training accuracies for each cue: 
 heart.fft$cues$stats$train
 ```
@@ -331,6 +339,7 @@ specificities for each cue, with the top five cues highlighted and
 listed:
 
 ``` r
+
 # Visualize individual cue accuracies: 
 plot(heart.fft, what = "cues", 
      main = "Cue accuracy for heartdisease")
@@ -354,6 +363,7 @@ The combination of these five pieces of information (as well as their
 order), define and describe *how* a tree makes decisions:
 
 ``` r
+
 # See the definitions of all trees:
 heart.fft$trees$definitions
 ```
@@ -423,6 +433,7 @@ For instance, to obtain a verbal description of the tree with the
 highest training accuracy (i.e., Tree #1), we can ask for:
 
 ``` r
+
 # Describe the best training tree (i.e., Tree #1):
 inwords(heart.fft, tree = 1)
 ```
@@ -438,6 +449,7 @@ range of accuracy statistics. Here are the training statistics for all
 trees in `heart.fft`:
 
 ``` r
+
 # Training statistics for all trees:
 heart.fft$trees$stats$train
 ```
@@ -458,6 +470,7 @@ heart.fft$trees$stats$train
 The corresponding statistics for the testing are:
 
 ``` r
+
 # Testing statistics for all trees:
 heart.fft$trees$stats$test
 ```
@@ -490,6 +503,7 @@ For instance, here are the decisions made by Tree 1 on the training
 data:
 
 ``` r
+
 # Inspect the decisions of Tree 1:
 heart.fft$trees$decisions$train$tree_1
 ```
@@ -520,6 +534,7 @@ best training `wacc` values is used to predict the value of the binary
 criterion variable:
 
 ``` r
+
 # Predict classes for new data from the best training tree: 
 predict(heart.fft,
         newdata = heartdisease[1:10, ])
@@ -539,6 +554,7 @@ as 0 / `FALSE`, and the second column indicates the probability for a
 case being classified as 1 / `TRUE`:
 
 ``` r
+
 # Predict class probabilities for new data from the best training tree:
 predict(heart.fft,
         newdata = heartdisease,
@@ -564,6 +580,7 @@ Use `type = "both"` to get both classification and probability
 predictions for cases:
 
 ``` r
+
 # Predict both classes and probabilities:
 predict(heart.fft,
         newdata = heartdisease,
@@ -595,6 +612,7 @@ following code will visualize the best training tree applied to the test
 data:
 
 ``` r
+
 plot(heart.fft,
      main = "Heart Disease",
      decision.labels = c("Healthy", "Disease"))
@@ -620,6 +638,7 @@ For example, we can manually define an FFT by using the sentence:
 - `"If chol > 300, predict True. If thal = {fd,rd}, predict False. Otherwise, predict True"`
 
 ``` r
+
 # Manually define a tree using the my.tree argument:
 myheart_fft <- FFTrees(diagnosis ~., 
                        data = heartdisease, 
@@ -631,6 +650,7 @@ myheart_fft <- FFTrees(diagnosis ~.,
 Here is a plot of the resulting FFT:
 
 ``` r
+
 plot(myheart_fft, 
      main = "Specifying a manual FFT")
 ```
@@ -652,15 +672,15 @@ FFTs.
 Here is a complete list of the vignettes available in the **FFTrees**
 package:
 
-|     | Vignette                                                                                                 | Description                                                                                                                        |
-|----:|:---------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------|
-|     | [Main guide: FFTrees overview](https://www.nathanieldphillips.co/FFTrees/articles/guide.md)              | An overview of the **FFTrees** package                                                                                             |
-|   1 | [Tutorial: FFTs for heart disease](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_heart.md)  | An example of using [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) to model heart disease diagnosis |
-|   2 | [Accuracy statistics](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_accuracy_statistics.md) | Definitions of accuracy statistics used throughout the package                                                                     |
-|   3 | [Creating FFTs with FFTrees()](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_function.md)   | Details on the main [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) function                         |
-|   4 | [Manually specifying FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_mytree.md)         | How to directly create FFTs without using the built-in algorithms                                                                  |
-|   5 | [Visualizing FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_plot.md)                   | Plotting `FFTrees` objects, from full trees to icon arrays                                                                         |
-|   6 | [Examples of FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_examples.md)               | Examples of FFTs from different datasets contained in the package                                                                  |
+|  | Vignette | Description |
+|---:|:---|:---|
+|  | [Main guide: FFTrees overview](https://www.nathanieldphillips.co/FFTrees/articles/guide.md) | An overview of the **FFTrees** package |
+| 1 | [Tutorial: FFTs for heart disease](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_heart.md) | An example of using [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) to model heart disease diagnosis |
+| 2 | [Accuracy statistics](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_accuracy_statistics.md) | Definitions of accuracy statistics used throughout the package |
+| 3 | [Creating FFTs with FFTrees()](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_function.md) | Details on the main [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) function |
+| 4 | [Manually specifying FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_mytree.md) | How to directly create FFTs without using the built-in algorithms |
+| 5 | [Visualizing FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_plot.md) | Plotting `FFTrees` objects, from full trees to icon arrays |
+| 6 | [Examples of FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_examples.md) | Examples of FFTs from different datasets contained in the package |
 
 ## References
 

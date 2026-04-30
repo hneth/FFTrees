@@ -11,6 +11,7 @@ First, let’s examine the accuracy statistics from an FFT predicting
 heart disease:
 
 ``` r
+
 # Create an FFTrees object predicting heart disease: 
 heart.fft <- FFTrees(formula = diagnosis ~.,
                      data = heartdisease)
@@ -24,6 +25,7 @@ corresponding accuracy and frugality statistics. For now, we simply plot
 the best training tree:
 
 ``` r
+
 plot(heart.fft, tree = "best.train")
 ```
 
@@ -67,16 +69,16 @@ Given this structure, an accurate decision algorithm aims to maximize
 the frequencies in cells *hi* and *cr* while minimizing those in
 cells *fa* and *mi*.
 
-| Output | Description                  | Formula                                                      |
-|:-------|:-----------------------------|:-------------------------------------------------------------|
-| `hi`   | Number of hits               | $N\left( \text{Decision} = 1 \land \text{Truth} = 1 \right)$ |
-| `mi`   | Number of misses             | $N\left( \text{Decision} = 0 \land \text{Truth} = 1 \right)$ |
-| `fa`   | Number of false-alarms       | $N\left( \text{Decision} = 1 \land \text{Truth} = 0 \right)$ |
-| `cr`   | Number of correct rejections | $N\left( \text{Decision} = 0 \land \text{Truth} = 0 \right)$ |
-| `N`    | Total number of cases        | $\text{N} = \text{hi} + \text{mi} + \text{fa} + \text{cr}$   |
+| Output | Description | Formula |
+|:---|:---|:---|
+| `hi` | Number of hits | $`N(\text{Decision} = 1 \land \text{Truth} = 1)`$ |
+| `mi` | Number of misses | $`N(\text{Decision} = 0 \land \text{Truth} = 1)`$ |
+| `fa` | Number of false-alarms | $`N(\text{Decision} = 1 \land \text{Truth} = 0)`$ |
+| `cr` | Number of correct rejections | $`N(\text{Decision} = 0 \land \text{Truth} = 0)`$ |
+| `N` | Total number of cases | $`\text{N} = \text{hi} + \text{mi} + \text{fa} + \text{cr}`$ |
 
 **Table 1**: Definitions of the frequency counts in a 2x2 confusion
-table. The notation $N{()}$ means number of cases (or frequency counts).
+table. The notation $`N()`$ means number of cases (or frequency counts).
 
 ### Conditional accuracy statistics
 
@@ -89,27 +91,27 @@ or criterion values (sensitivity vs. specificity). In other words, these
 measures are conditional probabilities that are based on either the rows
 or columns of the confusion table:
 
-| Output | Description               | Formula                                                                                                     |
-|:-------|:--------------------------|:------------------------------------------------------------------------------------------------------------|
-| `sens` | Sensitivity               | $p\left( \text{Decision} = 1\ |\ \text{Truth} = 1 \right) = \text{hi}/\left( \text{hi} + \text{mi} \right)$ |
-| `spec` | Specificity               | $p\left( \text{Decision} = 0\ |\ \text{Truth} = 0 \right) = \text{cr}/\left( \text{cr} + \text{fa} \right)$ |
-| `far`  | False alarm rate          | $1 - \text{Specificity}$ (`spec`)                                                                           |
-| `ppv`  | Positive predictive value | $p\left( \text{Truth} = 1\ |\ \text{Decision} = 1 \right) = \text{hi}/\left( \text{hi} + \text{fa} \right)$ |
-| `npv`  | Negative predictive value | $p\left( \text{Truth} = 0\ |\ \text{Decision} = 0 \right) = \text{cr}/\left( \text{cr} + \text{mi} \right)$ |
+| Output | Description | Formula |
+|:---|:---|:---|
+| `sens` | Sensitivity | $`p(\text{Decision} = 1 \ \vert\ \text{Truth} = 1) = \text{hi} / (\text{hi} + \text{mi})`$ |
+| `spec` | Specificity | $`p(\text{Decision} = 0 \ \vert\ \text{Truth} = 0) = \text{cr} / (\text{cr} + \text{fa})`$ |
+| `far` | False alarm rate | $`1 - \text{Specificity}`$ (`spec`) |
+| `ppv` | Positive predictive value | $`p(\text{Truth} = 1 \ \vert\ \text{Decision} = 1) = \text{hi} / (\text{hi} + \text{fa})`$ |
+| `npv` | Negative predictive value | $`p(\text{Truth} = 0 \ \vert\ \text{Decision} = 0) = \text{cr} / (\text{cr} + \text{mi})`$ |
 
 **Table 2**: Conditional accuracy statistics based on either the rows or
 columns of a 2x2 confusion table.
 
-The *sensitivity* (aka. *hit-rate*) is defined as $sens = hi/(hi + mi)$
-and represents the percentage of cases with positive criterion values
-that were correctly predicted by the algorithm. Similarly, *specificity*
-(aka. *correct rejection rate*, or the complement of the *false alarm
-rate*) is defined as $spec = cr/(fa + cr)$ and represents the percentage
-of cases with negative criterion values correctly predicted by the
-algorithm.
+The *sensitivity* (aka. *hit-rate*) is defined as
+$`sens = hi/(hi + mi)`$ and represents the percentage of cases with
+positive criterion values that were correctly predicted by the
+algorithm. Similarly, *specificity* (aka. *correct rejection rate*, or
+the complement of the *false alarm rate*) is defined as
+$`spec = cr/(fa + cr)`$ and represents the percentage of cases with
+negative criterion values correctly predicted by the algorithm.
 
-The *positive-predictive value* $ppv$ and *negative predictive
-value* $npv$ are the flip-sides of $sens$ and $spec$, as they are
+The *positive-predictive value* $`ppv`$ and *negative predictive
+value* $`npv`$ are the flip-sides of $`sens`$ and $`spec`$, as they are
 conditional accuracies based on decision outcomes (rather than on true
 criterion values).
 
@@ -118,24 +120,25 @@ criterion values).
 Additional accuracy statistics are based on all four cells in the
 confusion table:
 
-| Output   | Description               | Formula                                                                                             |
-|:---------|:--------------------------|:----------------------------------------------------------------------------------------------------|
-| `acc`    | Accuracy                  | $\left( \text{hi} + \text{cr} \right)/\left( \text{hi} + \text{mi} + \text{fa} + \text{cr} \right)$ |
-| `bacc`   | Balanced accuracy         | $\text{sens} \times .5 + \text{spec} \times .5$                                                     |
-| `wacc`   | Weighted accuracy         | $\text{sens} \times w + \text{spec} \times (1 - w)$                                                 |
-| `bpv`    | Balanced predictive value | $\text{ppv} \times .5 + \text{npv} \times .5$                                                       |
-| `dprime` | D-prime                   | $z_{\text{sens}} - z_{\text{far}}$                                                                  |
+| Output | Description | Formula |
+|:---|:---|:---|
+| `acc` | Accuracy | $`(\text{hi} + \text{cr}) / (\text{hi} + \text{mi} + \text{fa} + \text{cr})`$ |
+| `bacc` | Balanced accuracy | $`\text{sens} \times .5 + \text{spec} \times .5`$ |
+| `wacc` | Weighted accuracy | $`\text{sens} \times w + \text{spec} \times (1 - w)`$ |
+| `bpv` | Balanced predictive value | $`\text{ppv} \times .5 + \text{npv} \times .5`$ |
+| `dprime` | D-prime | $`z_{\text{sens}} - z_{\text{far}}`$ |
 
 **Table 3**: Aggregate accuracy statistics based on all four cells of a
 2x2 confusion table.
 
 Overall *accuracy* (`acc`) is defined as the overall percentage of
 correct decisions ignoring the difference between hits and correct
-rejections. The more specific measures $bacc$ and $wacc$ are averages of
-sensitivity and specificity, while $bpv$ is an average of predictive
-values. The $dprime$ measure is the difference in standardized
-($z$-score) transformed $sens$ and $far$(see Luan et al., 2011 for the
-relation between FFTs and signal detection theory, SDT).
+rejections. The more specific measures $`bacc`$ and $`wacc`$ are
+averages of sensitivity and specificity, while $`bpv`$ is an average of
+predictive values. The $`dprime`$ measure is the difference in
+standardized ($`z`$-score) transformed $`sens`$ and $`far`$(see Luan et
+al., 2011 for the relation between FFTs and signal detection theory,
+SDT).
 
 ### Speed and frugality statistics
 
@@ -144,10 +147,10 @@ fast-and-frugal tree (FFT). Unlike the accuracy statistics above, they
 are *not* based on the confusion table. Rather, they depend on how much
 information FFTs use to make their predictions or decisions.
 
-| Output | Description                                                                                            | Formula                                            |
-|:-------|:-------------------------------------------------------------------------------------------------------|:---------------------------------------------------|
-| `mcu`  | Mean cues used: Average number of cue values used in making classifications, averaged across all cases |                                                    |
-| `pci`  | Percentage of cues ignored: Percentage of cues ignored when classifying cases                          | $N\left( \text{cues in data} \right) - \text{mcu}$ |
+| Output | Description | Formula |
+|:---|:---|:---|
+| `mcu` | Mean cues used: Average number of cue values used in making classifications, averaged across all cases |  |
+| `pci` | Percentage of cues ignored: Percentage of cues ignored when classifying cases | $`N(\text{cues in data}) - \text{mcu}`$ |
 
 **Table 4**: Measures to quantify the speed and frugality of FFTs.
 
@@ -155,6 +158,7 @@ To see exactly where these statistics come from, let’s look at the
 results for `heart.fft` (Tree \#1):
 
 ``` r
+
 heart.fft
 ```
 
@@ -195,6 +199,7 @@ output of an `FFTrees` object. This object contains the tree level
 (i.e., node) at which each case was classified:
 
 ``` r
+
 # A vector of levels/nodes at which each case was classified:
 heart.fft$trees$decisions$train$tree_1$levelout
 ```
@@ -213,6 +218,7 @@ Now, to calculate `mcu` (the *mean number of cues used*), we simply take
 the mean of this vector:
 
 ``` r
+
 # Calculate the mean number or cues used (mcu): 
 mean(heart.fft$trees$decisions$train$tree_1$levelout)
 ```
@@ -225,6 +231,7 @@ number of cues in the dataset minus `mcu`, divided by the total number
 of cues in the data:
 
 ``` r
+
 # Calculate pci (percentage of cues ignored) as 
 # (n.cues - mcu) / n.cues):
 n.cues <- ncol(heartdisease) 
@@ -248,15 +255,15 @@ of Neth et al. (2021).
 Here is a complete list of the vignettes available in the **FFTrees**
 package:
 
-|     | Vignette                                                                                                 | Description                                                                                                                        |
-|----:|:---------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------|
-|     | [Main guide: FFTrees overview](https://www.nathanieldphillips.co/FFTrees/articles/guide.md)              | An overview of the **FFTrees** package                                                                                             |
-|   1 | [Tutorial: FFTs for heart disease](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_heart.md)  | An example of using [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) to model heart disease diagnosis |
-|   2 | [Accuracy statistics](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_accuracy_statistics.md) | Definitions of accuracy statistics used throughout the package                                                                     |
-|   3 | [Creating FFTs with FFTrees()](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_function.md)   | Details on the main [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) function                         |
-|   4 | [Specifying FFTs directly](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_mytree.md)         | How to directly create FFTs without using the built-in algorithms                                                                  |
-|   5 | [Visualizing FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_plot.md)                   | Plotting `FFTrees` objects, from full trees to icon arrays                                                                         |
-|   6 | [Examples of FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_examples.md)               | Examples of FFTs from different datasets contained in the package                                                                  |
+|  | Vignette | Description |
+|---:|:---|:---|
+|  | [Main guide: FFTrees overview](https://www.nathanieldphillips.co/FFTrees/articles/guide.md) | An overview of the **FFTrees** package |
+| 1 | [Tutorial: FFTs for heart disease](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_heart.md) | An example of using [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) to model heart disease diagnosis |
+| 2 | [Accuracy statistics](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_accuracy_statistics.md) | Definitions of accuracy statistics used throughout the package |
+| 3 | [Creating FFTs with FFTrees()](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_function.md) | Details on the main [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) function |
+| 4 | [Specifying FFTs directly](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_mytree.md) | How to directly create FFTs without using the built-in algorithms |
+| 5 | [Visualizing FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_plot.md) | Plotting `FFTrees` objects, from full trees to icon arrays |
+| 6 | [Examples of FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_examples.md) | Examples of FFTs from different datasets contained in the package |
 
 ## References
 

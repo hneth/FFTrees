@@ -20,25 +20,26 @@ Here are the first few rows and a subset of 10 potential predictors of
 the `mushrooms` data:
 
 | poisonous | cshape | csurface | ccolor | bruises | odor | vcolor | ringnum | ringtype | sporepc | population | habitat |
-|:----------|:-------|:---------|:-------|:--------|:-----|:-------|:--------|:---------|:--------|:-----------|:--------|
-| TRUE      | x      | s        | n      | TRUE    | p    | w      | o       | p        | k       | s          | u       |
-| FALSE     | x      | s        | y      | TRUE    | a    | w      | o       | p        | n       | n          | g       |
-| FALSE     | b      | s        | w      | TRUE    | l    | w      | o       | p        | n       | n          | m       |
-| TRUE      | x      | y        | w      | TRUE    | p    | w      | o       | p        | k       | s          | u       |
-| FALSE     | x      | s        | g      | FALSE   | n    | w      | o       | e        | n       | a          | g       |
-| FALSE     | x      | y        | y      | TRUE    | a    | w      | o       | p        | k       | n          | g       |
+|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|
+| TRUE | x | s | n | TRUE | p | w | o | p | k | s | u |
+| FALSE | x | s | y | TRUE | a | w | o | p | n | n | g |
+| FALSE | b | s | w | TRUE | l | w | o | p | n | n | m |
+| TRUE | x | y | w | TRUE | p | w | o | p | k | s | u |
+| FALSE | x | s | g | FALSE | n | w | o | e | n | a | g |
+| FALSE | x | y | y | TRUE | a | w | o | p | k | n | g |
 
 **Table 1**: Binary criterion variable `poisonous` and 10 potential
-predictors in the `mushrooms` data.
+predictors in the `mushrooms` data. {.table}
 
 #### Creating FFTs
 
 Let’s create some trees using
 [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md)!
 We’ll use the `train.p = .50` argument to split the original data into a
-$50$% training set and a $50$% testing set:
+$`50`$% training set and a $`50`$% testing set:
 
 ``` r
+
 # Create FFTs from the mushrooms data: 
 set.seed(1) # for replicability of the training / test data split
 
@@ -52,6 +53,7 @@ mushrooms_fft <- FFTrees(formula = poisonous ~.,
 Here’s basic information about the best performing FFT (Tree #1):
 
 ``` r
+
 # Print information about the best tree (during training):
 print(mushrooms_fft)
 ```
@@ -99,6 +101,7 @@ Let’s look at the individual cue training accuracies with
 `plot(fft, what = "cues")`:
 
 ``` r
+
 # Plot the cue accuracies of an FFTrees object:
 plot(mushrooms_fft, what = "cues")
 ```
@@ -110,9 +113,9 @@ plot(mushrooms_fft, what = "cues")
 ![](FFTrees_examples_files/figure-html/fft-mushrooms-1-plot-cues-1.png)
 
 It looks like the cues `oder` and `sporepc` are the best predictors. In
-fact, the single cue `odor` has a hit rate of $97$% and a false alarm
-rate of nearly $0$%! Based on this, we should expect the final trees to
-use just these cues.
+fact, the single cue `odor` has a hit rate of $`97`$% and a false alarm
+rate of nearly $`0`$%! Based on this, we should expect the final trees
+to use just these cues.
 
 #### Visualizing FFT performance
 
@@ -120,6 +123,7 @@ Now let’s plot the performance of the best training tree when applied to
 the test data:
 
 ``` r
+
 # Plot the best FFT (for test data): 
 plot(mushrooms_fft, data = "test")
 ```
@@ -127,8 +131,8 @@ plot(mushrooms_fft, data = "test")
 ![](FFTrees_examples_files/figure-html/fft-mushrooms-1-plot-1.png)
 
 Indeed, it looks like the best tree only uses the `odor` and `sporepc`
-cues. In our test dataset, the tree had a *false alarm rate* of $0$%
-($1 -$ specificity), and a *sensitivity* (aka. hit rate) of $85$%.
+cues. In our test dataset, the tree had a *false alarm rate* of $`0`$%
+($`1 -`$ specificity), and a *sensitivity* (aka. hit rate) of $`85`$%.
 
 #### Trading off prediction errors
 
@@ -153,6 +157,7 @@ FFTs from only these cues and check how they perform relative to our
 initial tree:
 
 ``` r
+
 # Create trees using only the ringtype and ringnum cues: 
 mushrooms_ring_fft <- FFTrees(formula = poisonous ~ ringtype + ringnum,
                               data = mushrooms,
@@ -165,6 +170,7 @@ Again, we plot the best training tree, when predicting the cases in the
 test dataset:
 
 ``` r
+
 # Plotting the best training FFT (for test data): 
 plot(mushrooms_ring_fft, data = "test")
 ```
@@ -172,8 +178,8 @@ plot(mushrooms_ring_fft, data = "test")
 ![](FFTrees_examples_files/figure-html/fft-mushrooms-2-plot-1.png)
 
 As we can see, this tree (in `mushrooms_ring_fft`) has both sensitivity
-and specificity values of around $80$%, but does not perform as well as
-our earlier one (in `mushrooms_fft`). This suggests that we should
+and specificity values of around $`80`$%, but does not perform as well
+as our earlier one (in `mushrooms_fft`). This suggests that we should
 discard the expert’s advice and primarily rely on the `odor`
 and `sporepc` cues.
 
@@ -190,6 +196,7 @@ subsets), so that we are really fitting the data, rather than engaging
 in prediction:
 
 ``` r
+
 # Create FFTrees object for iris data:
 iris_fft <- FFTrees(formula = virginica ~.,
                     data = iris.v,
@@ -205,6 +212,7 @@ tree (via `plot(iris_fft)`) or summarize the `FFTrees` object (via
 `summary(iris_fft)`):
 
 ``` r
+
 # Inspect resulting FFTs: 
 print(iris_fft)    # summarize best training tree
 plot(iris_fft)     # visualize best training tree
@@ -220,6 +228,7 @@ We can plot the training cue accuracies during training by specifying
 `what = "cues"`:
 
 ``` r
+
 # Plot cue values: 
 plot(iris_fft, what = "cues")
 ```
@@ -239,6 +248,7 @@ final trees will likely use one or both of these cues.
 Now let’s visualize the best tree:
 
 ``` r
+
 # Plot best FFT: 
 plot(iris_fft)
 ```
@@ -258,6 +268,7 @@ bottom right corner of the figure, we see that Tree #2 has a specificity
 close to 100%. Let’s plot this tree:
 
 ``` r
+
 # Plot FFT #2: 
 plot(iris_fft, tree = 2)
 ```
@@ -282,15 +293,15 @@ vignette.
 Here is a complete list of the vignettes available in the **FFTrees**
 package:
 
-|     | Vignette                                                                                                 | Description                                                                                                                        |
-|----:|:---------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------|
-|     | [Main guide: FFTrees overview](https://www.nathanieldphillips.co/FFTrees/articles/guide.md)              | An overview of the **FFTrees** package                                                                                             |
-|   1 | [Tutorial: FFTs for heart disease](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_heart.md)  | An example of using [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) to model heart disease diagnosis |
-|   2 | [Accuracy statistics](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_accuracy_statistics.md) | Definitions of accuracy statistics used throughout the package                                                                     |
-|   3 | [Creating FFTs with FFTrees()](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_function.md)   | Details on the main [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) function                         |
-|   4 | [Manually specifying FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_mytree.md)         | How to directly create FFTs without using the built-in algorithms                                                                  |
-|   5 | [Visualizing FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_plot.md)                   | Plotting `FFTrees` objects, from full trees to icon arrays                                                                         |
-|   6 | [Examples of FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_examples.md)               | Examples of FFTs from different datasets contained in the package                                                                  |
+|  | Vignette | Description |
+|---:|:---|:---|
+|  | [Main guide: FFTrees overview](https://www.nathanieldphillips.co/FFTrees/articles/guide.md) | An overview of the **FFTrees** package |
+| 1 | [Tutorial: FFTs for heart disease](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_heart.md) | An example of using [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) to model heart disease diagnosis |
+| 2 | [Accuracy statistics](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_accuracy_statistics.md) | Definitions of accuracy statistics used throughout the package |
+| 3 | [Creating FFTs with FFTrees()](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_function.md) | Details on the main [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) function |
+| 4 | [Manually specifying FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_mytree.md) | How to directly create FFTs without using the built-in algorithms |
+| 5 | [Visualizing FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_plot.md) | Plotting `FFTrees` objects, from full trees to icon arrays |
+| 6 | [Examples of FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_examples.md) | Examples of FFTs from different datasets contained in the package |
 
 ## References
 

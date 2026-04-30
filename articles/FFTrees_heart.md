@@ -22,6 +22,7 @@ We can install FFTrees from CRAN using
 (We only need to do this once.)
 
 ``` r
+
 # Install the package from CRAN:
 install.packages("FFTrees")
 ```
@@ -31,6 +32,7 @@ session. We load the package using
 [`library()`](https://rdrr.io/r/base/library.html):
 
 ``` r
+
 # Load the package:
 library(FFTrees)
 ```
@@ -40,6 +42,7 @@ the package’s functionality (like this one). To open the main guide, run
 [`FFTrees.guide()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.guide.md):
 
 ``` r
+
 # Open the main package guide: 
 FFTrees.guide()
 ```
@@ -68,6 +71,7 @@ with two main arguments:
 Here is how we can construct our first FFTs:
 
 ``` r
+
 # Create an FFTrees object:
 heart.fft <- FFTrees(formula = diagnosis ~ .,           # Criterion and (all) predictors
                      data = heart.train,                # Training data
@@ -121,6 +125,7 @@ start by printing the `FFTrees` object to return basic information to
 the console:
 
 ``` r
+
 # Print an FFTrees object:
 heart.fft
 ```
@@ -188,6 +193,7 @@ whereas `data = "test"` predicts the performance of an FFT for a
 different dataset:
 
 ``` r
+
 # Plot predictions of the best FFT when applied to test data:
 plot(heart.fft,      # An FFTrees object
      data = "test")  # data to use (i.e., either "train" or "test")?
@@ -214,6 +220,7 @@ for `FFTrees` object
   argument `stats = FALSE`.
 
 ``` r
+
 # Plot only the tree, without accuracy statistics:
 plot(heart.fft, what = "tree")
 ```
@@ -221,6 +228,7 @@ plot(heart.fft, what = "tree")
 ![](FFTrees_heart_files/figure-html/fft-no-stats-1.png)
 
 ``` r
+
 # plot(heart.fft, stats = FALSE)  #  The 'stats' argument has been deprecated.
 ```
 
@@ -235,6 +243,7 @@ plot(heart.fft, what = "tree")
   space), specify `what = "cues"`:
 
 ``` r
+
 # Plot cue accuracies (for training data) in ROC space:
 plot(heart.fft, what = "cues")
 ```
@@ -266,6 +275,7 @@ access parts of an `FFTrees` object, use
 [`names()`](https://rdrr.io/r/base/names.html):
 
 ``` r
+
 # Show the names of all outputs in heart.fft:
 names(heart.fft)
 ```
@@ -286,6 +296,7 @@ example, here’s how to predict the classifications for data in the
 `heart.train` and `heart.test`):
 
 ``` r
+
 # Predict classifications for a new dataset:
 predict(heart.fft, 
         newdata = heartdisease)
@@ -311,15 +322,15 @@ for defining FFTs from descriptions and modifying tree definitions.
 Here is a complete list of the vignettes available in the **FFTrees**
 package:
 
-|     | Vignette                                                                                                 | Description                                                                                                                        |
-|----:|:---------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------|
-|     | [Main guide: FFTrees overview](https://www.nathanieldphillips.co/FFTrees/articles/guide.md)              | An overview of the **FFTrees** package                                                                                             |
-|   1 | [Tutorial: FFTs for heart disease](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_heart.md)  | An example of using [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) to model heart disease diagnosis |
-|   2 | [Accuracy statistics](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_accuracy_statistics.md) | Definitions of accuracy statistics used throughout the package                                                                     |
-|   3 | [Creating FFTs with FFTrees()](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_function.md)   | Details on the main [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) function                         |
-|   4 | [Manually specifying FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_mytree.md)         | How to directly create FFTs without using the built-in algorithms                                                                  |
-|   5 | [Visualizing FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_plot.md)                   | Plotting `FFTrees` objects, from full trees to icon arrays                                                                         |
-|   6 | [Examples of FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_examples.md)               | Examples of FFTs from different datasets contained in the package                                                                  |
+|  | Vignette | Description |
+|---:|:---|:---|
+|  | [Main guide: FFTrees overview](https://www.nathanieldphillips.co/FFTrees/articles/guide.md) | An overview of the **FFTrees** package |
+| 1 | [Tutorial: FFTs for heart disease](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_heart.md) | An example of using [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) to model heart disease diagnosis |
+| 2 | [Accuracy statistics](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_accuracy_statistics.md) | Definitions of accuracy statistics used throughout the package |
+| 3 | [Creating FFTs with FFTrees()](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_function.md) | Details on the main [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) function |
+| 4 | [Manually specifying FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_mytree.md) | How to directly create FFTs without using the built-in algorithms |
+| 5 | [Visualizing FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_plot.md) | Plotting `FFTrees` objects, from full trees to icon arrays |
+| 6 | [Examples of FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_examples.md) | Examples of FFTs from different datasets contained in the package |
 
 ## References
 

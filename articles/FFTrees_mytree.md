@@ -55,12 +55,13 @@ variable (`diagnosis`):
 |   1 |  56 | normal | aa  |   0 | FALSE     |
 
 **Table 1**: Five cues and the binary criterion variable `diagnosis` for
-the first cases of the `heartdisease` data.
+the first cases of the `heartdisease` data. {.table}
 
 Here’s how we could verbally describe an FFT by using the first three
 cues in conditional sentences:
 
 ``` r
+
 in_words <- "If sex = 1, predict True.
              If age < 45, predict False. 
              If thal = {fd, normal}, predict True. 
@@ -110,6 +111,7 @@ function. This creates a corresponding FFT and applies it to the
 `heartdisease` data:
 
 ``` r
+
 # Create FFTrees from a verbal FFT description (as my.tree): 
 my_fft <- FFTrees(formula = diagnosis ~.,
                   data = heartdisease,
@@ -126,6 +128,7 @@ the tree’s performance on training or testing data. Let’s see how well
 our manually constructed FFT (`my_fft`) did on the training data:
 
 ``` r
+
 # Inspect FFTrees object:
 plot(my_fft, data = "train")
 ```
@@ -147,6 +150,7 @@ The formal definition of our new FFT is available from the `FFTrees`
 object `my_fft`:
 
 ``` r
+
 # Get FFT definition(s):
 get_fft_df(my_fft)  # my_fft$trees$definitions
 ```
@@ -178,6 +182,7 @@ Let’s see if we can come up with a better FFT. The following example
 uses the cues `thal`, `cp`, and `ca` in the `my.tree` argument:
 
 ``` r
+
 # Create a 2nd FFT from an alternative FFT description (as my.tree): 
 my_fft_2 <- FFTrees(formula = diagnosis ~.,
                     data = heartdisease, 
@@ -194,6 +199,7 @@ description of an FFT. For instance, we also could have described our
 desired FFT in more flowery terms:
 
 ``` r
+
 # Create a 2nd FFT from an alternative FFT description (as my.tree): 
 my_fft_2 <- FFTrees(formula = diagnosis ~.,
                     data = heartdisease, 
@@ -206,12 +212,13 @@ my_fft_2 <- FFTrees(formula = diagnosis ~.,
 
 However, as the vocabulary of **FFTrees** is limited, it is safer to
 enter cue directions in their symbolic form (i.e., using `=`, `<`, `<=`,
-`>`, `>=`, or `!=`).[¹](#fn1) To verify that **FFTrees** interpreted our
+`>`, `>=`, or `!=`).[^1] To verify that **FFTrees** interpreted our
 `my.tree` description as intended, let’s check whether the FFT of
 `inwords(my_fft_2)` yields a description that corresponds to what we
 wanted:
 
 ``` r
+
 inwords(my_fft_2)
 ```
 
@@ -224,6 +231,7 @@ visualize this tree (to evaluate its performance) and briefly inspect
 its tree definition:
 
 ``` r
+
 # Visualize FFT:
 plot(my_fft_2)
 
@@ -362,6 +370,7 @@ To obtain a set of existing tree definitions, we use our default
 algorithm to create an `FFTrees` object `x`:
 
 ``` r
+
 # Create an FFTrees object x:
 x <- FFTrees(formula = diagnosis ~ .,           # criterion and (all) predictors
              data = heart.train,                # training data
@@ -384,6 +393,7 @@ can use the
 utility function on `x` to obtain the set of generated tree definitions:
 
 ``` r
+
 # Get tree definitions of x:
 (tree_dfs <- get_fft_df(x))
 ```
@@ -425,6 +435,7 @@ initial FFT that we want to manipulate further. This is the job of
 In our present case, we select and convert tree `1`:
 
 ``` r
+
 (fft_1 <- read_fft_df(ffts_df = tree_dfs, tree = 1))
 ```
 
@@ -471,6 +482,7 @@ Thus, swapping the order of the 2nd and 3rd nodes of `fft_1` is achieved
 as follows:
 
 ``` r
+
 (my_fft_1 <- reorder_nodes(fft = fft_1, order = c(1, 3, 2)))
 ```
 
@@ -494,9 +506,9 @@ for the `diagnosis` criterion). Saving the resulting tree definition
 **Flipping exits** As we had no specific exit structure in mind when
 deciding to explore the cue order `thal`, `ca`, and `cp`, we will
 explore all possible exit directions. As every non-final node allows for
-two alternative exits, a tree containing $n$ nodes has
-$2^{(n - 1)}$ exit structures (i.e., $2^{2} = 4$ for 3 cues). The
-$3$ exit structures in addition to `my_fft_1` can be obtained by
+two alternative exits, a tree containing $`n`$ nodes has
+$`2^{(n-1)}`$ exit structures (i.e., $`2^2 = 4`$ for 3 cues). The
+$`3`$ exit structures in addition to `my_fft_1` can be obtained by
 flipping the exit directions of the first, second, or both non-final
 nodes. Each alternative can be achieved by applying the
 [`flip_exits()`](https://www.nathanieldphillips.co/FFTrees/reference/flip_exits.md)
@@ -509,6 +521,7 @@ For instance, the tree definition with a signal exit at the first node
 of `my_fft_1` can be reversed into a non-signal node as follows:
 
 ``` r
+
 (my_fft_2 <- flip_exits(my_fft_1, nodes = 1))
 ```
 
@@ -527,6 +540,7 @@ operator. For instance, reversing the exit of the 2nd cue of `my_fft_1`
 could be achieved as follows:
 
 ``` r
+
 library(magrittr)
 
 (my_fft_3 <- my_fft_1 %>% 
@@ -543,6 +557,7 @@ definition with the alternative exit structure of `my_fft_4` could be
 chained into a single pipe as follows:
 
 ``` r
+
 (my_fft_4 <- x %>% 
   get_fft_df() %>%
   read_fft_df(tree = 1) %>%
@@ -596,6 +611,7 @@ In addition to the FFT definition to convert (e.g., `my_fft_1`), the
 to identify the FFT within a set:
 
 ``` r
+
 (my_tree_dfs <- write_fft_df(my_fft_1, tree = 1))
 ```
 
@@ -624,6 +640,7 @@ applies
 the modified data frame as `my_tree_dfs` again:
 
 ``` r
+
 my_tree_dfs <- my_fft_2 %>%
   write_fft_df(tree = 2) %>%
   add_fft_df(my_tree_dfs)
@@ -669,9 +686,10 @@ line contains the definition of one FFT), we can provide an existing
 `FFTrees` object (e.g., `x` from above). Importantly, however, the input
 of `tree.definitions` prevents the generation of new FFTs (via the
 “ifan” or “dfan” algorithms) and instead evaluates the FFT definitions
-provided on the data specified:[²](#fn2)
+provided on the data specified:[^2]
 
 ``` r
+
 # Evaluate new tree.definitions for an existing FFTrees object x:
 y <- FFTrees(object = x,                      # existing FFTrees object x
              tree.definitions = my_tree_dfs,  # new set of FFT definitions
@@ -693,6 +711,7 @@ ways, e.g., by the [`summary()`](https://rdrr.io/r/base/summary.html),
 `y` or its trees:
 
 ``` r
+
 summary(y)
 ```
 
@@ -735,6 +754,7 @@ summary(y)
     #> |    4| 153| 28|  0| 45| 80| 0.38| 1.00| 0.00| 1.00| 0.64|   2.44| 0.71| 0.69| 0.69|     0.29|     1.71| 2.01| 0.87| 1.71|
 
 ``` r
+
 # Visualize individual FFTs:
 # plot(y, tree = 1)
 ```
@@ -760,6 +780,7 @@ full dataset of `heartdisease`, rather than splitting it into two
 distinct subsets:
 
 ``` r
+
 # Create a new FFTrees object z:
 z <- FFTrees(formula = diagnosis ~ .,
              data = heartdisease,             # using full dataset
@@ -773,6 +794,7 @@ summary, or printing or plotting individual FFTs from the `FFTrees`
 object `z`:
 
 ``` r
+
 # Summarize results: 
 summary(z)
 
@@ -785,6 +807,7 @@ automatically created ones, we could have added our new set
 `my_tree_dfs` to the old set (`tree_dfs`, obtained from `x` above).
 
 ``` r
+
 (all_fft_dfs <- add_fft_df(my_tree_dfs, tree_dfs))
 ```
 
@@ -809,6 +832,7 @@ function) creates a superset of 11 tree definitions, which can be
 evaluated together on the `heartdisease` data:
 
 ``` r
+
 # Create a new FFTrees object a:
 all <- FFTrees(formula = diagnosis ~ .,       
                data = heartdisease,             # using full dataset
@@ -823,31 +847,29 @@ summary(all)
 Evaluating the performance of the corresponding FFTs (e.g., by
 `summary(all)`) shows that reversing the final two cues had little to no
 effects on accuracy (but note minor differences in costs, e.g.,
-`mcu`).[³](#fn3)
+`mcu`).[^3]
 
 ## Vignettes
 
 Here is a complete list of the vignettes available in the **FFTrees**
 package:
 
-|     | Vignette                                                                                                 | Description                                                                                                                        |
-|----:|:---------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------|
-|     | [Main guide: FFTrees overview](https://www.nathanieldphillips.co/FFTrees/articles/guide.md)              | An overview of the **FFTrees** package                                                                                             |
-|   1 | [Tutorial: FFTs for heart disease](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_heart.md)  | An example of using [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) to model heart disease diagnosis |
-|   2 | [Accuracy statistics](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_accuracy_statistics.md) | Definitions of accuracy statistics used throughout the package                                                                     |
-|   3 | [Creating FFTs with FFTrees()](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_function.md)   | Details on the main [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) function                         |
-|   4 | [Manually specifying FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_mytree.md)         | How to directly create FFTs without using the built-in algorithms                                                                  |
-|   5 | [Visualizing FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_plot.md)                   | Plotting `FFTrees` objects, from full trees to icon arrays                                                                         |
-|   6 | [Examples of FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_examples.md)               | Examples of FFTs from different datasets contained in the package                                                                  |
+|  | Vignette | Description |
+|---:|:---|:---|
+|  | [Main guide: FFTrees overview](https://www.nathanieldphillips.co/FFTrees/articles/guide.md) | An overview of the **FFTrees** package |
+| 1 | [Tutorial: FFTs for heart disease](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_heart.md) | An example of using [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) to model heart disease diagnosis |
+| 2 | [Accuracy statistics](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_accuracy_statistics.md) | Definitions of accuracy statistics used throughout the package |
+| 3 | [Creating FFTs with FFTrees()](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_function.md) | Details on the main [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) function |
+| 4 | [Manually specifying FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_mytree.md) | How to directly create FFTs without using the built-in algorithms |
+| 5 | [Visualizing FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_plot.md) | Plotting `FFTrees` objects, from full trees to icon arrays |
+| 6 | [Examples of FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_examples.md) | Examples of FFTs from different datasets contained in the package |
 
-------------------------------------------------------------------------
-
-1.  Interpretable `my.tree` descriptions must avoid using “is” and “is
+[^1]: Interpretable `my.tree` descriptions must avoid using “is” and “is
     not” without additional qualifications (like “equal”, “different”,
     “larger”, “smaller”, etc.).
 
-2.  If the `tree.definitions` contain cue variables or values that
+[^2]: If the `tree.definitions` contain cue variables or values that
     cannot be found in the data, this will result in errors.
 
-3.  Note that applying FFT definitions to data resulted in re-sorting
+[^3]: Note that applying FFT definitions to data resulted in re-sorting
     the tree IDs according to the current `goal`.

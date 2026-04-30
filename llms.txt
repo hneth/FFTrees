@@ -30,6 +30,7 @@ The latest release of **FFTrees** is available from
 <https://CRAN.R-project.org/package=FFTrees>:
 
 ``` r
+
 install.packages("FFTrees")
 ```
 
@@ -38,6 +39,7 @@ The current development version can be installed from its
 <https://github.com/ndphillips/FFTrees>:
 
 ``` r
+
 # install.packages("devtools")
 devtools::install_github("ndphillips/FFTrees", build_vignettes = TRUE)
 ```
@@ -49,6 +51,7 @@ status (*Healthy* vs. *Disease*) based on the `heartdisease` dataset
 included in **FFTrees**:
 
 ``` r
+
 library(FFTrees)  # load package
 ```
 
@@ -91,14 +94,14 @@ Here are the first rows and columns of both subsets of the
 
 - `heart.train` (the training / fitting data) describes 150 patients:
 
-| diagnosis | age | sex | cp  | trestbps | chol | fbs | restecg     | thalach | exang | oldpeak | slope |  ca | thal   |
-|:----------|----:|----:|:----|---------:|-----:|----:|:------------|--------:|------:|--------:|:------|----:|:-------|
-| FALSE     |  44 |   0 | np  |      108 |  141 |   0 | normal      |     175 |     0 |     0.6 | flat  |   0 | normal |
-| FALSE     |  51 |   0 | np  |      140 |  308 |   0 | hypertrophy |     142 |     0 |     1.5 | up    |   1 | normal |
-| FALSE     |  52 |   1 | np  |      138 |  223 |   0 | normal      |     169 |     0 |     0.0 | up    |   1 | normal |
-| TRUE      |  48 |   1 | aa  |      110 |  229 |   0 | normal      |     168 |     0 |     1.0 | down  |   0 | rd     |
-| FALSE     |  59 |   1 | aa  |      140 |  221 |   0 | normal      |     164 |     1 |     0.0 | up    |   0 | normal |
-| FALSE     |  58 |   1 | np  |      105 |  240 |   0 | hypertrophy |     154 |     1 |     0.6 | flat  |   0 | rd     |
+| diagnosis | age | sex | cp | trestbps | chol | fbs | restecg | thalach | exang | oldpeak | slope | ca | thal |
+|:---|---:|---:|:---|---:|---:|---:|:---|---:|---:|---:|:---|---:|:---|
+| FALSE | 44 | 0 | np | 108 | 141 | 0 | normal | 175 | 0 | 0.6 | flat | 0 | normal |
+| FALSE | 51 | 0 | np | 140 | 308 | 0 | hypertrophy | 142 | 0 | 1.5 | up | 1 | normal |
+| FALSE | 52 | 1 | np | 138 | 223 | 0 | normal | 169 | 0 | 0.0 | up | 1 | normal |
+| TRUE | 48 | 1 | aa | 110 | 229 | 0 | normal | 168 | 0 | 1.0 | down | 0 | rd |
+| FALSE | 59 | 1 | aa | 140 | 221 | 0 | normal | 164 | 1 | 0.0 | up | 0 | normal |
+| FALSE | 58 | 1 | np | 105 | 240 | 0 | hypertrophy | 154 | 1 | 0.6 | flat | 0 | rd |
 
 **Table 1**: Beginning of the `heart.train` subset (using the data of
 150 patients for fitting/training FFTs).
@@ -106,14 +109,14 @@ Here are the first rows and columns of both subsets of the
 - `heart.test` (the testing / prediction data) describes 153 different
   patients on the same variables:
 
-| diagnosis | age | sex | cp  | trestbps | chol | fbs | restecg     | thalach | exang | oldpeak | slope |  ca | thal   |
-|:----------|----:|----:|:----|---------:|-----:|----:|:------------|--------:|------:|--------:|:------|----:|:-------|
-| FALSE     |  51 |   0 | np  |      120 |  295 |   0 | hypertrophy |     157 |     0 |     0.6 | up    |   0 | normal |
-| TRUE      |  45 |   1 | ta  |      110 |  264 |   0 | normal      |     132 |     0 |     1.2 | flat  |   0 | rd     |
-| TRUE      |  53 |   1 | a   |      123 |  282 |   0 | normal      |      95 |     1 |     2.0 | flat  |   2 | rd     |
-| TRUE      |  45 |   1 | a   |      142 |  309 |   0 | hypertrophy |     147 |     1 |     0.0 | flat  |   3 | rd     |
-| FALSE     |  66 |   1 | a   |      120 |  302 |   0 | hypertrophy |     151 |     0 |     0.4 | flat  |   0 | normal |
-| TRUE      |  48 |   1 | a   |      130 |  256 |   1 | hypertrophy |     150 |     1 |     0.0 | up    |   2 | rd     |
+| diagnosis | age | sex | cp | trestbps | chol | fbs | restecg | thalach | exang | oldpeak | slope | ca | thal |
+|:---|---:|---:|:---|---:|---:|---:|:---|---:|---:|---:|:---|---:|:---|
+| FALSE | 51 | 0 | np | 120 | 295 | 0 | hypertrophy | 157 | 0 | 0.6 | up | 0 | normal |
+| TRUE | 45 | 1 | ta | 110 | 264 | 0 | normal | 132 | 0 | 1.2 | flat | 0 | rd |
+| TRUE | 53 | 1 | a | 123 | 282 | 0 | normal | 95 | 1 | 2.0 | flat | 2 | rd |
+| TRUE | 45 | 1 | a | 142 | 309 | 0 | hypertrophy | 147 | 1 | 0.0 | flat | 3 | rd |
+| FALSE | 66 | 1 | a | 120 | 302 | 0 | hypertrophy | 151 | 0 | 0.4 | flat | 0 | normal |
+| TRUE | 48 | 1 | a | 130 | 256 | 1 | hypertrophy | 150 | 1 | 0.0 | up | 2 | rd |
 
 **Table 2**: Beginning of the `heart.test` subset (used to predict
 `diagnosis` for 153 new patients).
@@ -136,6 +139,7 @@ predictive performance on the `heart.test` data:
   data:
 
 ``` r
+
 # Create an FFTrees object from the heartdisease data:
 heart_fft <- FFTrees(formula = diagnosis ~.,
                      data = heart.train,
@@ -154,6 +158,7 @@ specific data or trees).
   performance (on the `test` data):
 
 ``` r
+
 # Plot the best tree applied to the test data: 
 plot(heart_fft,
      data = "test",
@@ -184,6 +189,7 @@ These conditions can directly be supplied to the `my.tree` argument of
 [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md):
 
 ``` r
+
 # Create custom FFT 'in words' and apply it to test data:
 
 # 1. Create my own FFT (from verbal description):
@@ -227,12 +233,12 @@ package enables us to design and evaluate a range of FFTs.
 The following versions of **FFTrees** and corresponding resources are
 available:
 
-| Type:                       | Version:                                                                          | URL:                                                |
-|:----------------------------|:----------------------------------------------------------------------------------|:----------------------------------------------------|
-| A. **FFTrees** (R package): | [Release version](https://CRAN.R-project.org/package=FFTrees)                     | <https://CRAN.R-project.org/package=FFTrees>        |
-|                             | [Development version](https://github.com/ndphillips/FFTrees)                      | <https://github.com/ndphillips/FFTrees>             |
-| B. Other resources:         | [Online documentation](https://www.nathanieldphillips.co/FFTrees/)                | <https://www.nathanieldphillips.co/FFTrees/>        |
-|                             | [Online demo](https://econpsychbasel.shinyapps.io/shinyfftrees/) (running v1.3.3) | <https://econpsychbasel.shinyapps.io/shinyfftrees/> |
+| Type: | Version: | URL: |
+|:---|:---|:---|
+| A. **FFTrees** (R package): | [Release version](https://CRAN.R-project.org/package=FFTrees) | <https://CRAN.R-project.org/package=FFTrees> |
+|   | [Development version](https://github.com/ndphillips/FFTrees) | <https://github.com/ndphillips/FFTrees> |
+| B. Other resources: | [Online documentation](https://www.nathanieldphillips.co/FFTrees/) | <https://www.nathanieldphillips.co/FFTrees/> |
+|   | [Online demo](https://econpsychbasel.shinyapps.io/shinyfftrees/) (running v1.3.3) | <https://econpsychbasel.shinyapps.io/shinyfftrees/> |
 
 ## References
 

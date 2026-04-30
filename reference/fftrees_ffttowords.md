@@ -68,13 +68,14 @@ for creating FFTs from and applying them to data.
 ## Examples
 
 ``` r
+
 heart.fft <- FFTrees(diagnosis ~ .,
   data = heartdisease,
   decision.labels = c("Healthy", "Disease")
 )
 #> ✔ Created an FFTrees object.
 #>   Ranking 13 cues:  ■■■■■■■■                          23% | ETA:  1s
-#>   Ranking 13 cues:  ■■■■■■■■■■                        31% | ETA:  1s
+#>   Ranking 13 cues:  ■■■■■■■■■■■■■■■■■■■■■■■■          77% | ETA:  0s
 #>   Ranking 13 cues:  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> 
 #> ✔ Ranked 13 cues (optimizing 'bacc').

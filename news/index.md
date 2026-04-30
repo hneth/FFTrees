@@ -515,7 +515,7 @@ Changes since last release:
 - Changed wording of statistics throughout package: `hr` (*hit rate*)
   and `far` (*false alarm rate*) (based on the classification frequency
   values `hi` and `fa`), are now `sens` for *sensitivity* and `spec` for
-  *specificity* (1 $-$`far`), respectively.
+  *specificity* (1 $`-`$`far`), respectively.
 
 - The `rank.method` argument is now deprecated. Use `algorithm` instead.
 

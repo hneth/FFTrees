@@ -18,8 +18,8 @@ Each non-final node of an FFT has one exit branch and the final node has
 two exit branches.
 
 FFTs are simple and effective decision strategies that use minimal
-information for making decisions in binary classification problems
-(Gigerenzer et al., 1999; see Gigerenzer & Todd, 1999). FFTs are often
+information for making decisions in binary classification problems (see
+Gigerenzer & Todd, 1999; Gigerenzer et al., 1999). FFTs are often
 preferable to more complex decision strategies (such as logistic
 regression, LR) because they rarely over-fit data (Gigerenzer &
 Brighton, 2009) and are easy to interpret, implement, and communicate in
@@ -50,6 +50,7 @@ Here is an example of using the main
 function to fit FFTs to `heart.train` data:
 
 ``` r
+
 # Create a fast-and-frugal tree (FFT) predicting heart disease:
 heart.fft <- FFTrees(formula = diagnosis ~.,
                      data = heart.train,
@@ -65,6 +66,7 @@ data with their true criterion values. Here is how we can apply the best
 training FFT to the `heart.test` data:
 
 ``` r
+
 # Visualize predictive performance:
 plot(heart.fft, data = "test")
 ```
@@ -93,15 +95,15 @@ vignettes provide details on related topics and corresponding examples.
 Here is a complete list of the vignettes available in the **FFTrees**
 package:
 
-|     | Vignette                                                                                                 | Description                                                                                                                        |
-|----:|:---------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------|
-|     | [Main guide: FFTrees overview](https://www.nathanieldphillips.co/FFTrees/articles/guide.md)              | An overview of the **FFTrees** package                                                                                             |
-|   1 | [Tutorial: FFTs for heart disease](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_heart.md)  | An example of using [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) to model heart disease diagnosis |
-|   2 | [Accuracy statistics](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_accuracy_statistics.md) | Definitions of accuracy statistics used throughout the package                                                                     |
-|   3 | [Creating FFTs with FFTrees()](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_function.md)   | Details on the main [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) function                         |
-|   4 | [Manually specifying FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_mytree.md)         | How to directly create FFTs without using the built-in algorithms                                                                  |
-|   5 | [Visualizing FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_plot.md)                   | Plotting `FFTrees` objects, from full trees to icon arrays                                                                         |
-|   6 | [Examples of FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_examples.md)               | Examples of FFTs from different datasets contained in the package                                                                  |
+|  | Vignette | Description |
+|---:|:---|:---|
+|  | [Main guide: FFTrees overview](https://www.nathanieldphillips.co/FFTrees/articles/guide.md) | An overview of the **FFTrees** package |
+| 1 | [Tutorial: FFTs for heart disease](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_heart.md) | An example of using [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) to model heart disease diagnosis |
+| 2 | [Accuracy statistics](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_accuracy_statistics.md) | Definitions of accuracy statistics used throughout the package |
+| 3 | [Creating FFTs with FFTrees()](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_function.md) | Details on the main [`FFTrees()`](https://www.nathanieldphillips.co/FFTrees/reference/FFTrees.md) function |
+| 4 | [Manually specifying FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_mytree.md) | How to directly create FFTs without using the built-in algorithms |
+| 5 | [Visualizing FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_plot.md) | Plotting `FFTrees` objects, from full trees to icon arrays |
+| 6 | [Examples of FFTs](https://www.nathanieldphillips.co/FFTrees/articles/FFTrees_examples.md) | Examples of FFTs from different datasets contained in the package |
 
 ### Datasets
 
@@ -149,22 +151,22 @@ for additional details).
 
 **Table 1:** Key information on the datasets included in **FFTrees**.
 
-| Dataset name   | Number of cases | Criterion name | Baseline (`TRUE`, in %) | Number of predictors | Number of NAs | NAs (in %) |
-|:---------------|----------------:|:---------------|------------------------:|---------------------:|--------------:|-----------:|
-| blood          |             748 | donation.crit  |                    23.8 |                    4 |             0 |       0.00 |
-| breastcancer   |             683 | diagnosis      |                    35.0 |                    9 |             0 |       0.00 |
-| car            |            1728 | acceptability  |                    22.2 |                    6 |             0 |       0.00 |
-| contraceptive  |            1473 | cont.crit      |                    57.3 |                    9 |             0 |       0.00 |
-| creditapproval |             690 | crit           |                    44.5 |                   15 |            67 |       0.61 |
-| fertility      |             100 | diagnosis      |                    88.0 |                    9 |             0 |       0.00 |
-| forestfires    |             517 | fire.crit      |                    47.0 |                   12 |             0 |       0.00 |
-| heartdisease   |             303 | diagnosis      |                    45.9 |                   13 |             0 |       0.00 |
-| iris.v         |             150 | virginica      |                    33.3 |                    4 |             0 |       0.00 |
-| mushrooms      |            8124 | poisonous      |                    48.2 |                   22 |          2480 |       1.33 |
-| sonar          |             208 | mine.crit      |                    53.4 |                   60 |             0 |       0.00 |
-| titanic        |            2201 | survived       |                    32.3 |                    3 |             0 |       0.00 |
-| voting         |             434 | party.crit     |                    61.5 |                   16 |           391 |       5.30 |
-| wine           |            6497 | type           |                    24.6 |                   12 |             0 |       0.00 |
+| Dataset name | Number of cases | Criterion name | Baseline (`TRUE`, in %) | Number of predictors | Number of NAs | NAs (in %) |
+|:---|---:|:---|---:|---:|---:|---:|
+| blood | 748 | donation.crit | 23.8 | 4 | 0 | 0.00 |
+| breastcancer | 683 | diagnosis | 35.0 | 9 | 0 | 0.00 |
+| car | 1728 | acceptability | 22.2 | 6 | 0 | 0.00 |
+| contraceptive | 1473 | cont.crit | 57.3 | 9 | 0 | 0.00 |
+| creditapproval | 690 | crit | 44.5 | 15 | 67 | 0.61 |
+| fertility | 100 | diagnosis | 88.0 | 9 | 0 | 0.00 |
+| forestfires | 517 | fire.crit | 47.0 | 12 | 0 | 0.00 |
+| heartdisease | 303 | diagnosis | 45.9 | 13 | 0 | 0.00 |
+| iris.v | 150 | virginica | 33.3 | 4 | 0 | 0.00 |
+| mushrooms | 8124 | poisonous | 48.2 | 22 | 2480 | 1.33 |
+| sonar | 208 | mine.crit | 53.4 | 60 | 0 | 0.00 |
+| titanic | 2201 | survived | 32.3 | 3 | 0 | 0.00 |
+| voting | 434 | party.crit | 61.5 | 16 | 391 | 5.30 |
+| wine | 6497 | type | 24.6 | 12 | 0 | 0.00 |
 
 ## Citing **FFTrees**
 
