@@ -7,22 +7,20 @@
 
 <!-- Devel badges start: -->
 
-<!-- [![CRAN status](https://www.r-pkg.org/badges/version/FFTrees)](https://CRAN.R-project.org/package=FFTrees) -->
-
-<!-- [![Downloads/month](https://cranlogs.r-pkg.org/badges/FFTrees?color="00a9e0")](https://www.r-pkg.org/pkg/FFTrees) -->
-
-<!-- [![Total downloads](https://cranlogs.r-pkg.org/badges/grand-total/FFTrees?color="00a9e0")](https://www.r-pkg.org/pkg/FFTrees) -->
-
-<!-- [![R-CMD-check](https://github.com/ndphillips/FFTrees/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ndphillips/FFTrees/actions/workflows/R-CMD-check.yaml) -->
-
+[![CRAN
+status](https://www.r-pkg.org/badges/version/FFTrees)](https://CRAN.R-project.org/package=FFTrees)
+[![Downloads/month](https://cranlogs.r-pkg.org/badges/FFTrees?color=%2200a9e0%22)](https://www.r-pkg.org/pkg/FFTrees)
+[![Total
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/FFTrees?color=%2200a9e0%22)](https://www.r-pkg.org/pkg/FFTrees)
+[![R-CMD-check](https://github.com/ndphillips/FFTrees/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ndphillips/FFTrees/actions/workflows/R-CMD-check.yaml)
 <!-- Devel badges end. -->
 
 <!-- Release badges start: -->
 
-[![CRAN
-status](https://www.r-pkg.org/badges/version/FFTrees)](https://CRAN.R-project.org/package=FFTrees)
-[![Total
-downloads](https://cranlogs.r-pkg.org/badges/grand-total/FFTrees?color=%2200a9e0%22)](https://www.r-pkg.org/pkg/FFTrees)
+<!-- [![CRAN status](https://www.r-pkg.org/badges/version/FFTrees)](https://CRAN.R-project.org/package=FFTrees) -->
+
+<!-- [![Total downloads](https://cranlogs.r-pkg.org/badges/grand-total/FFTrees?color="00a9e0")](https://www.r-pkg.org/pkg/FFTrees) -->
+
 <!-- Release badges end. -->
 
 <!-- ALL badges start: -->
@@ -109,8 +107,8 @@ library(FFTrees)  # load package
 A *fast-and-frugal tree* (FFT) provides answers to binary prediction
 problems like:
 
-- Which of 2 categories should I predict for each individual case in the
-  data?
+- Which of 2 categories should we predict for each individual case in
+  the data?
 - How successful is this prediction process for a sample of cases?
 
 <!-- 1. Creating FFTs: -->
@@ -364,6 +362,6 @@ for the full list). Examples include:
 
 ------------------------------------------------------------------------
 
-\[File `README.Rmd` last updated on 2026-04-28.\]
+\[File `README.Rmd` last updated on 2026-05-02.\]
 
 <!-- eof. -->
