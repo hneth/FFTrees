@@ -88,6 +88,9 @@ breast.fft <- FFTrees(
   data = breast.train
 )
 #> ✔ Created an FFTrees object.
+#>   Ranking 9 cues:  ■■■■■■■■                          22% | ETA:  0s
+#>   Ranking 9 cues:  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
+#> 
 #> ✔ Ranked 9 cues (optimizing 'bacc').
 #> ✔ Created 6 FFTs with 'ifan' algorithm (chasing 'bacc').
 #> ✔ Defined 6 FFTs.
