@@ -164,20 +164,20 @@ knitr::include_graphics("virginica.jpg")
 ```
 
 The `iris.v` dataset contains data about 150\ flowers (see `?iris.v`). 
-Our goal is to predict which flowers are of the class _Virginica_. 
-In this example, we'll create trees using the entire dataset (without splitting the available data into explicit training vs. test subsets), so that we are really fitting the data, rather than engaging in genuine prediction: 
+Our present goal is to predict which flowers are of the class _Virginica_. 
+In this example, we create trees using the entire dataset (without splitting the available data into explicit training vs. test subsets), so that we are really fitting the data, rather than engaging in prediction: 
 
 ```{r iris-fft, message = FALSE, results = 'hide'}
 # Create FFTrees object for iris data:
 iris_fft <- FFTrees(formula = virginica ~.,
                     data = iris.v,
-                    main = "Iris viginica",
+                    main = "Iris virginica",
                     decision.labels = c("Not-Vir", "Vir"))
 ```
 
-The **FFTrees** package provides various functions to inspect the `FFTrees` object `iris_fft`. 
+The **FFTrees** package provides various functions to inspect the `FFTrees` object\ `iris_fft`. 
 For summary information on the best training tree, we can print the `FTrees` object (by evaluating `iris_fft` or `print(iris_fft)`). 
-Alternatively, we could visualize the tree (via `plot(iris_fft)`) or summarize the `FFTrees` object (via `summary(iris_fft)`): 
+Alternatively, we can visualize the tree (via `plot(iris_fft)`) or summarize the `FFTrees` object (via `summary(iris_fft)`): 
 
 ```{r iris-fft-print, echo = TRUE, eval = FALSE, results = 'hide'}
 # Inspect resulting FFTs: 
@@ -198,7 +198,7 @@ We can plot the training cue accuracies during training by specifying `what = "c
 plot(iris_fft, what = "cues")
 ```
 
-It looks like the two cues\ `pet.len` and\ `pet.wid` are the best predictors for this dataset. 
+It looks like the two cues\ `pet.len` and\ `pet.wid` are the best predictors for this data. 
 Based on this insight, we should expect the final trees will likely use one or both of these cues.
 
 

@@ -3,26 +3,24 @@
 
 <!-- Title, version and logo: -->
 
-# FFTrees 2.1.0 <img src = "man/figures/logo.png" align = "right" alt = "FFTrees" width = "160" />
+# FFTrees 2.1.0.9001 <img src = "man/figures/logo.png" align = "right" alt = "FFTrees" width = "160" />
 
 <!-- Devel badges start: -->
 
-<!-- [![CRAN status](https://www.r-pkg.org/badges/version/FFTrees)](https://CRAN.R-project.org/package=FFTrees) -->
-
-<!-- [![Downloads/month](https://cranlogs.r-pkg.org/badges/FFTrees?color="00a9e0")](https://www.r-pkg.org/pkg/FFTrees) -->
-
-<!-- [![Total downloads](https://cranlogs.r-pkg.org/badges/grand-total/FFTrees?color="00a9e0")](https://www.r-pkg.org/pkg/FFTrees) -->
-
-<!-- [![R-CMD-check](https://github.com/ndphillips/FFTrees/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ndphillips/FFTrees/actions/workflows/R-CMD-check.yaml) -->
-
+[![CRAN
+status](https://www.r-pkg.org/badges/version/FFTrees)](https://CRAN.R-project.org/package=FFTrees)
+[![Downloads/month](https://cranlogs.r-pkg.org/badges/FFTrees?color=%2200a9e0%22)](https://www.r-pkg.org/pkg/FFTrees)
+[![Total
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/FFTrees?color=%2200a9e0%22)](https://www.r-pkg.org/pkg/FFTrees)
+[![R-CMD-check](https://github.com/ndphillips/FFTrees/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ndphillips/FFTrees/actions/workflows/R-CMD-check.yaml)
 <!-- Devel badges end. -->
 
 <!-- Release badges start: -->
 
-[![CRAN
-status](https://www.r-pkg.org/badges/version/FFTrees)](https://CRAN.R-project.org/package=FFTrees)
-[![Total
-downloads](https://cranlogs.r-pkg.org/badges/grand-total/FFTrees?color=%2200a9e0%22)](https://www.r-pkg.org/pkg/FFTrees)
+<!-- [![CRAN status](https://www.r-pkg.org/badges/version/FFTrees)](https://CRAN.R-project.org/package=FFTrees) -->
+
+<!-- [![Total downloads](https://cranlogs.r-pkg.org/badges/grand-total/FFTrees?color="00a9e0")](https://www.r-pkg.org/pkg/FFTrees) -->
+
 <!-- Release badges end. -->
 
 <!-- ALL badges start: -->
@@ -102,14 +100,50 @@ included in **FFTrees**:
 library(FFTrees)  # load package
 ```
 
+### Questions answered by FFTs
+
+<!-- 0. FFTs provide binary predictions: -->
+
+A *fast-and-frugal tree* (FFT) provides answers to binary prediction
+problems like:
+
+- Which of 2 categories should we predict for each individual case in
+  the data?
+- How successful is this prediction process for a sample of cases?
+
+<!-- 1. Creating FFTs: -->
+
+To *create* FFTs, we must answer 2 key questions:
+
+- Which variables should we use to predict the criterion?
+- How should we combine those predictor variables into FFTs?
+
+<!-- 2. Measuring performance of FFTs: -->
+
+Once we have created FFTs, questions regarding their *performance*
+include:
+
+- How accurate are the predictions of a specific FFT?
+- How costly are the predictions of each algorithm?
+
+Answering these performance-related questions requires applying FFTs to
+data.
+
+<!-- The FFTrees package: -->
+
+The **FFTrees** package answers these questions by creating, evaluating,
+and visualizing FFTs.
+
 ### Using data
 
-The `heartdisease` data provides medical information for 303 patients
-that were examined for heart disease. The full data contains a binary
-criterion variable describing the true state of each patient and were
-split into two subsets: A `heart.train` set for fitting decision trees,
-and `heart.test` set for a testing these trees. Here are the first rows
-and columns of both subsets of the `heartdisease` data:
+Any prediction problem requires some data that contains some predictors
+and a criterion variable. The `heartdisease` data provides medical
+information for 303 patients that were examined for heart disease. The
+full data contains a binary criterion variable describing the true state
+of each patient and were split into two subsets: A `heart.train` set for
+fitting decision trees, and `heart.test` set for a testing these trees.
+Here are the first rows and columns of both subsets of the
+`heartdisease` data:
 
 - `heart.train` (the training / fitting data) describes 150 patients:
 
@@ -145,22 +179,6 @@ logical values indicating the true state of each patient (i.e., `TRUE`
 or `FALSE`, based on the patient suffering or not suffering from heart
 disease) — from the values of potential predictors.
 
-### Questions answered by FFTs
-
-To solve binary classification problems by FFTs, we must answer two key
-questions:
-
-- Which of the variables should we use to predict the criterion?
-- How should we use and combine predictor variables into FFTs?
-
-Once we have created some FFTs, additional questions include:
-
-- How accurate are the predictions of a specific FFT?
-- How costly are the predictions of each algorithm?
-
-The **FFTrees** package answers these questions by creating, evaluating,
-and visualizing FFTs.
-
 ### Creating fast-and-frugal trees (FFTs)
 
 We use the main `FFTrees()` function to create FFTs for the
@@ -195,7 +213,7 @@ plot(heart_fft,
      main = "Heart Disease")
 ```
 
-<img src="man/figures/README-example-heart-plot-1.png" width="650" style="display: block; margin: auto;" />
+<img src="man/figures/README-example-heart-plot-1.png" alt="" width="650" style="display: block; margin: auto;" />
 
 **Figure 1**: A fast-and-frugal tree (FFT) predicting heart disease for
 `test` data and its performance characteristics.
@@ -239,7 +257,7 @@ plot(my_fft,
      main = "My custom FFT")
 ```
 
-<img src="man/figures/README-example-heart-verbal-1.png" width="650" style="display: block; margin: auto;" />
+<img src="man/figures/README-example-heart-verbal-1.png" alt="" width="650" style="display: block; margin: auto;" />
 
 **Figure 2**: An FFT predicting heart disease created from a verbal
 description.
@@ -304,7 +322,7 @@ continue developing the package.
 
 <!-- Examples uses/publications (with links): -->
 
-By 2025, over 150 scientific publications have used or cited **FFTrees**
+By 2026, over 160 scientific publications have used or cited **FFTrees**
 (see [Google
 Scholar](https://scholar.google.com/scholar?oi=bibs&hl=en&cites=205528310591558601)
 for the full list). Examples include:
@@ -344,6 +362,6 @@ for the full list). Examples include:
 
 ------------------------------------------------------------------------
 
-\[File `README.Rmd` last updated on 2025-09-03.\]
+\[File `README.Rmd` last updated on 2026-05-02.\]
 
 <!-- eof. -->
