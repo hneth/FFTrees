@@ -35,8 +35,8 @@
 
 fftrees_cuerank <- function(x = NULL,
                             newdata = NULL,
-                            data = "train",  # type of data
-                            rounding = NULL) {
+                            data = "train",    # type of data
+                            rounding = NULL) { # ToDo: Use a sensible default, e.g., rounding = 3 (in the FFTrees() function)
 
   # Prepare: ------
 
