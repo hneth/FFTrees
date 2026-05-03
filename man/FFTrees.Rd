@@ -143,9 +143,9 @@ If specified, no new FFTs are being fitted (i.e., \code{algorithm} and functions
 Instead, the tree definitions provided are used to re-evaluate the current \code{FFTrees} object on current data.}
 
 \item{quiet}{A list of 4 logical arguments: Should detailed progress reports be suppressed?
-Setting list elements to \code{FALSE} is helpful when diagnosing errors.
 Default: \code{quiet = list(ini = TRUE, fin = FALSE, mis = FALSE, set = TRUE)},
 for initial vs. final steps, missing cases, and parameter settings, respectively.
+Setting list elements to \code{FALSE} is helpful when diagnosing errors.
 Providing a single logical value sets all elements to \code{TRUE} or \code{FALSE}.}
 
 \item{comp, do.comp, do.lr, do.cart, do.svm, do.rf, force, rank.method, rounding, store.data, verbose}{Deprecated arguments (unused or replaced, to be retired in future releases).}
