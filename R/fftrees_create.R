@@ -43,7 +43,8 @@
 #' @param my.tree A verbal description of an FFT, i.e., an "FFT in words" (as character string).
 #' For example, \code{my.tree = "If age > 20, predict TRUE. If sex = {m}, predict FALSE. Otherwise, predict TRUE."}.
 #'
-#' @param quiet A list of logical elements.
+#' @param quiet A list of 4 logical arguments: Should detailed progress reports be suppressed?
+#' Default: \code{quiet = list(ini = TRUE, fin = FALSE, mis = FALSE, set = TRUE)}.
 #'
 #'
 #' @return A new \code{FFTrees} object.
