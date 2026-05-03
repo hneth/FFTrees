@@ -136,7 +136,9 @@ fftrees_create(
 
 - quiet:
 
-  A list of logical elements.
+  A list of 4 logical arguments: Should detailed progress reports be
+  suppressed? Default:
+  `quiet = list(ini = TRUE, fin = FALSE, mis = FALSE, set = TRUE)`.
 
 ## Value
 

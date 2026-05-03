@@ -259,12 +259,12 @@ FFTrees(
 - quiet:
 
   A list of 4 logical arguments: Should detailed progress reports be
-  suppressed? Setting list elements to `FALSE` is helpful when
-  diagnosing errors. Default:
+  suppressed? Default:
   `quiet = list(ini = TRUE, fin = FALSE, mis = FALSE, set = TRUE)`, for
   initial vs. final steps, missing cases, and parameter settings,
-  respectively. Providing a single logical value sets all elements to
-  `TRUE` or `FALSE`.
+  respectively. Setting list elements to `FALSE` is helpful when
+  diagnosing errors. Providing a single logical value sets all elements
+  to `TRUE` or `FALSE`.
 
 - comp, do.comp, do.lr, do.cart, do.svm, do.rf, force, rank.method,
   rounding, store.data, verbose:
