@@ -1,6 +1,6 @@
 # Accuracy statistics in FFTrees
 
-## Accuracy Statistics in **FFTrees**
+## Accuracy statistics in **FFTrees**
 
 In this vignette, we cover how accuracy statistics are calculated for
 FFTs and the **FFTrees** package (as described in Phillips et al.,

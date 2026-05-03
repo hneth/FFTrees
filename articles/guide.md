@@ -5,7 +5,7 @@ create, visualize, and evaluate fast-and-frugal decision trees (FFTs).
 FFTs are simple and transparent decision algorithms for solving binary
 classification problems in an effective and efficient fashion.
 
-## Fast-and-Frugal Trees (FFTs)
+## Fast-and-frugal trees (FFTs)
 
 A *fast-and-frugal tree* (FFT) (Martignon et al., 2003) is a set of
 hierarchical rules for solving binary classification tasks based on very
