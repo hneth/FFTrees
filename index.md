@@ -1,4 +1,4 @@
-# FFTrees 2.1.0.9001
+# FFTrees 2.1.0.9002
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/FFTrees)](https://CRAN.R-project.org/package=FFTrees)
@@ -267,7 +267,7 @@ your experiences (e.g., [on
 GitHub](https://github.com/ndphillips/FFTrees/issues)) so we can
 continue developing the package.
 
-By 2026, over 160 scientific publications have used or cited **FFTrees**
+By 2026, over 180 scientific publications have used or cited **FFTrees**
 (see [Google
 Scholar](https://scholar.google.com/scholar?oi=bibs&hl=en&cites=205528310591558601)
 for the full list). Examples include:
@@ -305,4 +305,4 @@ for the full list). Examples include:
 
 ------------------------------------------------------------------------
 
-\[File `README.Rmd` last updated on 2026-05-02.\]
+\[File `README.Rmd` last updated on 2026-11-12.\]

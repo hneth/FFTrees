@@ -299,7 +299,7 @@ grammar of FFTs.
 #### Overview: Retrieving, manipulating, and using FFT definitions
 
 ![\*\*Figure 3\*\*: Overview of 4 tree definition and conversion
-functions (in yellow)\<br\>and 6 tree trimming functions (in
+functions (in yellow)and 6 tree trimming functions (in
 blue).](gFFTs.png)
 
 **Figure 3**: Overview of 4 tree definition and conversion functions (in

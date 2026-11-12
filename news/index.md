@@ -1,5 +1,26 @@
 # Changelog
 
+## FFTrees 2.1.9002
+
+This is the current development version of **FFTrees** at
+<https://github.com/ndphillips/FFTrees>.
+
+Log of changes:
+
+### Major changes
+
+- none yet
+
+### Minor changes
+
+- none yet
+
+### Details
+
+- Updated documentation.
+
+------------------------------------------------------------------------
+
 ## FFTrees 2.1.0
 
 CRAN release: 2025-09-02
@@ -624,4 +645,4 @@ Changes since last release:
 
 ------------------------------------------------------------------------
 
-\[File `NEWS.md` last updated on 2025-09-03.\]
+\[File `NEWS.md` last updated on 2026-11-12.\]
