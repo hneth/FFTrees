@@ -24,7 +24,7 @@ reversal (e.g., negating cue direction).
 ## Usage
 
 ``` r
-fftrees_ffttowords(x = NULL, mydata = "train", digits = 2)
+fftrees_ffttowords(x = NULL, mydata = "train", digits = NULL)
 ```
 
 ## Arguments
@@ -41,7 +41,8 @@ fftrees_ffttowords(x = NULL, mydata = "train", digits = 2)
 
 - digits:
 
-  How many digits to round numeric values (as integer)?
+  How many digits to round numeric values (as integer)? Default:
+  `digits = NULL` uses the current value of `x$params$digits`.
 
 ## Value
 

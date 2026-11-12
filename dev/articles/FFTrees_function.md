@@ -148,7 +148,7 @@ of FFTs contained in the current `FFTrees` object:
 5.  `data`: The datasets used to `train` and `test` the FFTs (if
     applicable).
 
-6.  `params`: The parameters used for constructing FFTs (currently 19
+6.  `params`: The parameters used for constructing FFTs (currently 20
     parameters).
 
 7.  `competition`: Models and statistics of alternative classification

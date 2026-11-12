@@ -7,7 +7,13 @@
 ## Usage
 
 ``` r
-fftrees_cuerank(x = NULL, newdata = NULL, data = "train", rounding = NULL)
+fftrees_cuerank(
+  x = NULL,
+  newdata = NULL,
+  data = "train",
+  digits = NULL,
+  rounding = NULL
+)
 ```
 
 ## Arguments
@@ -25,11 +31,15 @@ fftrees_cuerank(x = NULL, newdata = NULL, data = "train", rounding = NULL)
   The type of data with cues to be ranked (as character: `'train'`,
   `'test'`, or `'dynamic'`). Default: `data = 'train'`.
 
-- rounding:
+- digits:
 
   integer. An integer value indicating the decimal digit to which
   non-integer numeric cue thresholds are to be rounded. Default:
-  `rounding = NULL` (i.e., no rounding).
+  `digits = NULL` uses the current value of `x$params$digits`.
+
+- rounding:
+
+  Deprecated: Use `digits` instead.
 
 ## Value
 

@@ -75,6 +75,7 @@ and for evaluation purposes (e.g., <code>sens.w</code> and cost values).</p>
 <span>  stopping.rule <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stopping.par <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sens.w <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  digits <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cost.outcomes <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cost.cues <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  main <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -144,6 +145,11 @@ and for evaluation purposes (e.g., <code>sens.w</code> and cost values).</p>
 
 <dt id="arg-sens-w">sens.w<a class="anchor" aria-label="anchor" href="#arg-sens-w"></a></dt>
 <dd><p>numeric.</p></dd>
+
+
+<dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
+<dd><p>numeric. The number of decimal digits to which non-integer
+numeric cue thresholds are rounded. Stored as <code>x$params$digits</code>.</p></dd>
 
 
 <dt id="arg-cost-outcomes">cost.outcomes<a class="anchor" aria-label="anchor" href="#arg-cost-outcomes"></a></dt>

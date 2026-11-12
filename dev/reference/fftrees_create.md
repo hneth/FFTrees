@@ -27,6 +27,7 @@ fftrees_create(
   stopping.rule = NULL,
   stopping.par = NULL,
   sens.w = NULL,
+  digits = NULL,
   cost.outcomes = NULL,
   cost.cues = NULL,
   main = NULL,
@@ -96,6 +97,11 @@ fftrees_create(
 - sens.w:
 
   numeric.
+
+- digits:
+
+  numeric. The number of decimal digits to which non-integer numeric cue
+  thresholds are rounded. Stored as `x$params$digits`.
 
 - cost.outcomes:
 

@@ -47,11 +47,16 @@
 <p>Log of changes:</p>
 <div class="section level3">
 <h3 id="major-changes-2-1-9002">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-2-1-9002"></a></h3>
-<ul><li>none yet</li>
+<ul><li>Restored the rounding of numeric cue threshold values (from earlier versions) via a consistent <code>digits</code> parameter:
+<ul><li>
+<code><a href="../reference/FFTrees.html">FFTrees()</a></code> gained a <code>digits</code> argument (Default: <code>digits = 2</code>) whose value is stored as <code>x$params$digits</code> and passed along with the <code>FFTrees</code> object <code>x</code>.</li>
+<li>
+<code><a href="../reference/fftrees_cuerank.html">fftrees_cuerank()</a></code> and <code><a href="../reference/fftrees_ffttowords.html">fftrees_ffttowords()</a></code> now use <code>x$params$digits</code> (by default) to round numeric cue thresholds.</li>
+</ul></li>
 </ul></div>
 <div class="section level3">
 <h3 id="minor-changes-2-1-9002">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-2-1-9002"></a></h3>
-<ul><li>none yet</li>
+<ul><li>Deprecated the <code>rounding</code> argument (in <code><a href="../reference/FFTrees.html">FFTrees()</a></code> and <code><a href="../reference/fftrees_cuerank.html">fftrees_cuerank()</a></code>) in favor of the consistent <code>digits</code> argument. When <code>rounding</code> is still provided, its value is used as <code>digits</code> (with a deprecation warning).</li>
 </ul></div>
 <div class="section level3">
 <h3 id="details-2-1-9002">Details<a class="anchor" aria-label="anchor" href="#details-2-1-9002"></a></h3>

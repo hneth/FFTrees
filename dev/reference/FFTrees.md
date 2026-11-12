@@ -48,6 +48,7 @@ FFTrees(
   stopping.rule = "exemplars",
   stopping.par = 0.1,
   sens.w = 0.5,
+  digits = 2,
   cost.outcomes = NULL,
   cost.cues = NULL,
   main = NULL,
@@ -185,6 +186,14 @@ FFTrees(
   `goal = 'wacc'`). Default: `sens.w = .50` (i.e., `wacc` corresponds to
   `bacc`).
 
+- digits:
+
+  An integer value specifying the number of decimal digits to which
+  non-integer numeric cue thresholds are rounded (when ranking cues and
+  when expressing FFTs in words). The value is stored as
+  `x$params$digits` and passed along with the `FFTrees` object `x`.
+  Default: `digits = 2`.
+
 - cost.outcomes:
 
   A list of length 4 specifying the cost value for one of the 4 possible
@@ -270,7 +279,7 @@ FFTrees(
   rounding, store.data, verbose:
 
   Deprecated arguments (unused or replaced, to be retired in future
-  releases).
+  releases). Note: `rounding` has been replaced by `digits` (see above).
 
 ## Value
 
@@ -336,7 +345,6 @@ heart.fft <- FFTrees(formula = diagnosis ~ .,
                      )
 #> ✔ Created an FFTrees object.
 #>   Ranking 13 cues:  ■■■■■■■■                          23% | ETA:  1s
-#>   Ranking 13 cues:  ■■■■■■■■■■■■■■■                   46% | ETA:  0s
 #>   Ranking 13 cues:  ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s
 #> 
 #> ✔ Ranked 13 cues (optimizing 'bacc').

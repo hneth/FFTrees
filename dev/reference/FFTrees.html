@@ -109,6 +109,7 @@ Specifically,</p>
 <span>  stopping.rule <span class="op">=</span> <span class="st">"exemplars"</span>,</span>
 <span>  stopping.par <span class="op">=</span> <span class="fl">0.1</span>,</span>
 <span>  sens.w <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  cost.outcomes <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cost.cues <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  main <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -225,6 +226,14 @@ sensitivity relative to specificity when optimizing <em>weighted</em> accuracy (
 Default: <code>sens.w = .50</code> (i.e., <code>wacc</code> corresponds to <code>bacc</code>).</p></dd>
 
 
+<dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
+<dd><p>An integer value specifying the number of decimal digits to which
+non-integer numeric cue thresholds are rounded (when ranking cues and when
+expressing FFTs in words). The value is stored as <code>x$params$digits</code> and
+passed along with the <code>FFTrees</code> object <code>x</code>.
+Default: <code>digits = 2</code>.</p></dd>
+
+
 <dt id="arg-cost-outcomes">cost.outcomes<a class="anchor" aria-label="anchor" href="#arg-cost-outcomes"></a></dt>
 <dd><p>A list of length 4 specifying the cost value for one of the 4 possible classification outcomes.
 The list elements must be named <code>'hi'</code>, <code>'fa'</code>, <code>'mi'</code>, and <code>'cr'</code>
@@ -288,7 +297,8 @@ Providing a single logical value sets all elements to <code>TRUE</code> or <code
 
 
 <dt id="arg-comp-do-comp-do-lr-do-cart-do-svm-do-rf-force-rank-method-rounding-store-data-verbose">comp, do.comp, do.lr, do.cart, do.svm, do.rf, force, rank.method, rounding, store.data, verbose<a class="anchor" aria-label="anchor" href="#arg-comp-do-comp-do-lr-do-cart-do-svm-do-rf-force-rank-method-rounding-store-data-verbose"></a></dt>
-<dd><p>Deprecated arguments (unused or replaced, to be retired in future releases).</p></dd>
+<dd><p>Deprecated arguments (unused or replaced, to be retired in future releases).
+Note: <code>rounding</code> has been replaced by <code>digits</code> (see above).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -337,7 +347,6 @@ Providing a single logical value sets all elements to <code>TRUE</code> or <code
 <span class="r-in"><span>                     <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Created an FFTrees object.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Ranking 13 cues:  <span style="color: #00BB00;">■■■■■■■■                        </span>  23% | ETA:  1s</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Ranking 13 cues:  <span style="color: #00BB00;">■■■■■■■■■■■■■■■                 </span>  46% | ETA:  0s</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Ranking 13 cues:  <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ </span> 100% | ETA:  0s</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Ranked 13 cues (optimizing 'bacc').</span>

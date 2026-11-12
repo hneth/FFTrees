@@ -26,6 +26,9 @@ Useful links:
 
 Authors:
 
+- Hansjoerg Neth <h.neth@uni.kn>
+  ([ORCID](https://orcid.org/0000-0001-5427-3141))
+
 - Nathaniel Phillips <Nathaniel.D.Phillips.is@gmail.com>
   ([ORCID](https://orcid.org/0000-0002-8969-7013))
 
